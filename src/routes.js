@@ -13,6 +13,7 @@ import Register from "auth/Register";
 import ForgotPass from "auth/ForgotPass";
 import ResetPassword from "auth/ResetPassword";
 import Detail from "views/Detail";
+import Dashboard from "views/Dashboard";
 
 const authRoutes = [
 
@@ -24,57 +25,63 @@ var routes = [
   // { path: "/login", component: Login },
   // { path: "/forgot-password", component: ForgotPass },
   // { path: "/register", component: Register },
-  // {
-  //   path: "/dashboard",
-  //   name: "Dashboard",
-  //   rtlName: "لوحة القيادة",
-  //   icon: "tim-icons icon-chart-pie-36",
-  //   component: Dashboard,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    rtlName: "Dashboard",
+    icon: "tim-icons icon-chart-pie-36",
+    component: Dashboard,
+    layout: "/admin",
+    rtllayout: "/rtl",
+  },
   {
     path: "/login",
     name: "Login",
-    rtlName: "الرموز",
+    rtlName: "Login",
     icon: "tim-icons icon-atom",
     component: Login,
     layout: "/admin",
+    rtllayout: "/rtl",
   },
 
   {
     path: "/register",
     name: "Register",
-    rtlName: "الرموز",
+    rtlName: "Register",
     icon: "tim-icons icon-atom",
     component: Register,
     layout: "/admin",
+    rtllayout: "/rtl",
   },
 
   {
     path: "/resetpassword",
     name: "ResetPass",
-    rtlName: "الرموز",
+    rtlName: "ResetPass",
     icon: "tim-icons icon-atom",
     component: ResetPassword,
     layout: "/admin",
+    rtllayout: "/rtl",
   },
 
   {
     path: "/forgotpass",
     name: "Forgot Password",
-    rtlName: "ملف تعريفي للمستخدم",
+    rtlName: "Forgot Password",
     icon: "tim-icons icon-single-02",
     component: ForgotPass,
     layout: "/admin",
+    rtllayout: "/rtl",
   },
 
   {
-    path: "/icons",
+    path: "/games",
     name: "Games",
-    rtlName: "الرموز",
+    rtlName: "Games",
     icon: "tim-icons icon-atom",
     component: Icons,
     layout: "/admin",
+    rtllayout: "/rtl",
   },
   // {
   //   path: "/map",
@@ -95,27 +102,31 @@ var routes = [
   {
     path: "/user-profile",
     name: "User Profile",
-    rtlName: "ملف تعريفي للمستخدم",
+    rtlName: "User Profile",
     icon: "tim-icons icon-single-02",
     component: UserProfile,
     layout: "/admin",
+    rtllayout: "/rtl",
   },
   {
     path: "/detail",
     name: "Detail",
-    rtlName: "قائمة الجدول",
+    rtlName: "Detail",
     icon: "tim-icons icon-puzzle-10",
     component: Detail,
     layout: "/admin",
+    rtllayout: "/rtl",
   },
   {
     path: "/tables",
     name: "Table List",
-    rtlName: "قائمة الجدول",
+    rtlName: "Table List",
     icon: "tim-icons icon-puzzle-10",
     component: TableList,
     layout: "/admin",
+    rtllayout: "/rtl",
   },
+  
  
   // {
   //   path: "/typography",

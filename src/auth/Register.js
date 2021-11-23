@@ -98,7 +98,7 @@ const Register = () => {
                     onChange={e => setConfirmpassword(e.target.value)}
                     />
                 </div>
-                <input name="login" id="login" className="btn btn-block login-btn mb-4" type="submit" defaultValue="Register"  />
+                <input name="login" id="login" className="btn btn-block login-btn mb-4" type="submit" value="Đăng ký"  />
               </form>
               <Link to="#!" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
               <p className="login-card-footer-text"></p>

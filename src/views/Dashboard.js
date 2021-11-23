@@ -44,7 +44,7 @@ function Dashboard(props) {
       <div className="content">
         <Row>
           <Col xs="12">
-            <Card className="card-chart">
+            {/* <Card className="card-chart">
               <CardHeader>
                 <Row>
                   <Col className="text-left" sm="6">
@@ -119,12 +119,12 @@ function Dashboard(props) {
                   />
                 </div>
               </CardBody>
-            </Card>
+            </Card> */}
           </Col>
         </Row>
         <Row>
           <Col lg="4">
-            <Card className="card-chart">
+            {/* <Card className="card-chart">
               <CardHeader>
                 <h5 className="card-category">Total Shipments</h5>
                 <CardTitle tag="h3">
@@ -139,10 +139,10 @@ function Dashboard(props) {
                   />
                 </div>
               </CardBody>
-            </Card>
+            </Card> */}
           </Col>
           <Col lg="4">
-            <Card className="card-chart">
+            {/* <Card className="card-chart">
               <CardHeader>
                 <h5 className="card-category">Daily Sales</h5>
                 <CardTitle tag="h3">
@@ -158,10 +158,10 @@ function Dashboard(props) {
                   />
                 </div>
               </CardBody>
-            </Card>
+            </Card> */}
           </Col>
           <Col lg="4">
-            <Card className="card-chart">
+            {/* <Card className="card-chart">
               <CardHeader>
                 <h5 className="card-category">Completed Tasks</h5>
                 <CardTitle tag="h3">
@@ -176,12 +176,12 @@ function Dashboard(props) {
                   />
                 </div>
               </CardBody>
-            </Card>
+            </Card> */}
           </Col>
         </Row>
         <Row>
           <Col lg="6" md="12">
-            <Card className="card-tasks">
+            {/* <Card className="card-tasks">
               <CardHeader>
                 <h6 className="title d-inline">Tasks(5)</h6>
                 <p className="card-category d-inline"> today</p>
@@ -445,10 +445,10 @@ function Dashboard(props) {
                   </Table>
                 </div>
               </CardBody>
-            </Card>
+            </Card> */}
           </Col>
           <Col lg="6" md="12">
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle tag="h4">Simple Table</CardTitle>
               </CardHeader>
@@ -508,7 +508,7 @@ function Dashboard(props) {
                   </tbody>
                 </Table>
               </CardBody>
-            </Card>
+            </Card> */}
           </Col>
         </Row>
       </div>

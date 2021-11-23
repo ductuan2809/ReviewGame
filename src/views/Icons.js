@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 // reactstrap components
 //import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import {
@@ -38,8 +38,9 @@ import { Link } from "react-router-dom";
 
 function Icons() {
 
-    
-    
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
     //mảng data ảo
     const cardinfo=[
         {image: img1,tile:"Genshin Impact",genre:"Open World",text:"Guaranteed Qiqi(5 stars) within 90rolls",id:"1"},
@@ -90,8 +91,12 @@ function Icons() {
     })
     const pageCount=Math.ceil(cardinfo.length/itemsPerPage)
 
+    
+    
     const changePage=({selected})=>{
         setpageNumber(selected);
+        
+    
     }
     
     return (
@@ -113,6 +118,7 @@ function Icons() {
                          nextLinkClassName={"nextBttn"}
                          disabledClassName={"paginationDisabled"}
                          activeClassName={"paginationActive"}
+                         onClick={useEffect}
                     />
                 </Col>
             </Row>

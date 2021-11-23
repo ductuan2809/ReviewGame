@@ -50,7 +50,7 @@ function RTL(props) {
       }
     }
     // on this page, we need on the body tag the classes .rtl and .menu-on-right
-    document.body.classList.add("rtl", "menu-on-right");
+    document.body.classList.add("rtl", "menu-on-left");
     // we also need the rtl bootstrap
     // so we add it dynamically to the head
     let head = document.head;
@@ -96,13 +96,15 @@ function RTL(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/rtl") {
+      if (prop.rtllayout === "/rtl") {
+        console.log(prop.component)
         return (
           <Route
-            path={prop.layout + prop.path}
+            path={prop.rtllayout + prop.path}
             component={prop.component}
             key={key}
           />
+          
         );
       } else {
         return null;
@@ -111,7 +113,7 @@ function RTL(props) {
   };
   const getBrandText = (path) => {
     for (let i = 0; i < routes.length; i++) {
-      if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
+      if (location.pathname.indexOf(routes[i].rtllayout + routes[i].path) !== -1) {
         return routes[i].name;
       }
     }
@@ -126,7 +128,7 @@ function RTL(props) {
                 rtlActive
                 logo={{
                   outterLink: "https://www.creative-tim.com/",
-                  text: "الإبداعية تيم",
+                  text: "Review Game",
                   imgSrc: logo,
                 }}
                 toggleSidebar={toggleSidebar}
@@ -140,7 +142,7 @@ function RTL(props) {
                 <Switch>{getRoutes(routes)}</Switch>
                 {
                   // we don't want the Footer to be rendered on map page
-                  location.pathname === "/admin/maps" ? null : <Footer fluid />
+                  location.pathname === "/rtl/maps" ? null : <Footer fluid />
                 }
               </div>
             </div>

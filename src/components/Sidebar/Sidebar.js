@@ -18,6 +18,8 @@ var ps;
 function Sidebar(props) {
   const location = useLocation();
   const sidebarRef = React.useRef(null);
+  const islogin = true;
+  
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     return location.pathname === routeName ? "active" : "";
@@ -89,6 +91,7 @@ function Sidebar(props) {
       );
     }
   }
+  
   return (
     <BackgroundColorContext.Consumer>
       {({ color }) => (
@@ -103,7 +106,16 @@ function Sidebar(props) {
             <Nav>
               {routes.map((prop, key) => {
                 if (prop.redirect) return null;
+                //các route muốn ẩn thì thêm đk
+                if (prop.name=="Detail") return null;
+                if (!islogin) if (prop.name=="Dashboard" || prop.name=="User Profile" || prop.name=="Table List") return null;
+                if (islogin) if (prop.name=="Login" || prop.name=="Register" || prop.name =="Forgot Password" || prop.name=="Dashboard" || prop.name=="Table List") return null;
+                const checkrtl=()=>{
+                  if (rtlActive) return prop.rtllayout + prop.path;
+                  return prop.layout + prop.path;
+                }
                 return (
+                  
                   <li
                     className={
                       activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
@@ -112,7 +124,7 @@ function Sidebar(props) {
                   >
                     
                     <NavLink
-                      to={prop.layout + prop.path}
+                      to={checkrtl}
                       className="nav-link"
                       activeClassName="active"
                       onClick={props.toggleSidebar}
@@ -138,7 +150,8 @@ function Sidebar(props) {
 }
 
 Sidebar.defaultProps = {
-  rtlActive: false,
+  
+  rtlActive: true,
   routes: [{}],
 };
 

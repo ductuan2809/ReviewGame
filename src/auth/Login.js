@@ -67,7 +67,7 @@ const Login = (props) => {
                     />
               </div>
                 <div className="form-group mb-4">
-                  <label>Password</label>
+                  <label>Mật khẩu</label>
                   <input
                     type="password" 
                     name="password"  
@@ -77,7 +77,7 @@ const Login = (props) => {
                     onChange={handlePassChange}
                     />
                 </div>
-                <input name="login" id="login" className="btn btn-block login-btn mb-4" type="submit" defaultValue="Login"  />
+                <input name="login" id="login" className="btn btn-block login-btn mb-4" type="submit" value="Đăng nhập"  />
               </form>
               <Link to="#!" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
               <p className="login-card-footer-text"></p>

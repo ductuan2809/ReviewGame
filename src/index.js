@@ -30,14 +30,22 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import Detail from "views/Detail";
 
+const userstate={
+  role : false,
+}
+
+
+
 ReactDOM.render(
+  
   <ThemeContextWrapper>
       <BrowserRouter>
         <Switch>
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
           <Route path="/rtl" render={(props) => <RTLLayout {...props} />} />
-          <Route path="/admin/detail" component={Detail}/>
-          <Redirect from="/" to="/admin/dashboard" />
+          
+          <Redirect from="/" to="/admin/games" />
+          {/* {userstate.role ? <Redirect from="/" to="/admin/dashboard" /> : <Redirect from="/" to="/rtl/dashboard" />} */}
         </Switch>
       </BrowserRouter>
   </ThemeContextWrapper>,
