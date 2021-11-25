@@ -14,6 +14,8 @@ import ForgotPass from "auth/ForgotPass";
 import ResetPassword from "auth/ResetPassword";
 import Detail from "views/GameDetail/Detail";
 import Dashboard from "views/Dashboard";
+import DetailAdd from "views/DetailAdd";
+import ManageUser from "views/ManageUser";
 
 const authRoutes = [
 
@@ -31,8 +33,9 @@ var routes = [
     rtlName: "Dashboard",
     icon: "tim-icons icon-chart-pie-36",
     component: Dashboard,
-    layout: "/admin",
-    rtllayout: "/rtl",
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
   },
   {
     path: "/login",
@@ -40,8 +43,9 @@ var routes = [
     rtlName: "Login",
     icon: "tim-icons icon-chart-pie-36",
     component: Login,
-    layout: "/guest",
-    rtllayout: "/rtl",
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
   },
 
   {
@@ -50,8 +54,9 @@ var routes = [
     rtlName: "Register",
     icon: "tim-icons icon-bell-55",
     component: Register,
-    layout: "/guest",
-    rtllayout: "/rtl",
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
   },
 
   {
@@ -60,8 +65,9 @@ var routes = [
     rtlName: "ResetPass",
     icon: "tim-icons icon-atom",
     component: ResetPassword,
-    layout: "/guest",
-    rtllayout: "/rtl",
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
   },
 
   {
@@ -70,8 +76,9 @@ var routes = [
     rtlName: "Forgot Password",
     icon: "tim-icons icon-single-02",
     component: ForgotPass,
-    layout: "/guest",
-    rtllayout: "/rtl",
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
   },
 
   {
@@ -80,8 +87,30 @@ var routes = [
     rtlName: "Games",
     icon: "tim-icons icon-atom",
     component: Icons,
-    layout: "/guest",
-    rtllayout: "/rtl",
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
+  },
+
+  {
+    path: "/manage-games",
+    name: "Manage-games",
+    rtlName: "Mangae-games",
+    icon: "tim-icons icon-atom",
+    component: TableList,
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
+  },
+  {
+    path: "/manage-user",
+    name: "Manage-games",
+    rtlName: "Mangae-games",
+    icon: "tim-icons icon-atom",
+    component: ManageUser,
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
   },
   // {
   //   path: "/map",
@@ -105,8 +134,9 @@ var routes = [
     rtlName: "User Profile",
     icon: "tim-icons icon-single-02",
     component: UserProfile,
-    layout: "/admin",
-    rtllayout: "/rtl",
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
   },
   {
     path: "/detail",
@@ -114,8 +144,9 @@ var routes = [
     rtlName: "Detail",
     icon: "tim-icons icon-puzzle-10",
     component: Detail,
-    layout: "/admin",
-    rtllayout: "/rtl",
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
   },
   {
     path: "/tables",
@@ -123,10 +154,21 @@ var routes = [
     rtlName: "Table List",
     icon: "tim-icons icon-puzzle-10",
     component: TableList,
-    layout: "/admin",
-    rtllayout: "/rtl",
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
   },
   
+  {
+    path: "/add-games",
+    name: "Add-games",
+    rtlName: "Add-games",
+    icon: "tim-icons icon-puzzle-10",
+    component: DetailAdd,
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
+  },
  
   // {
   //   path: "/typography",

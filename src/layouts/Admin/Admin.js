@@ -63,10 +63,10 @@ function Admin(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.adminlayout === "/admin") {
         return (
           <Route
-            path={prop.layout + prop.path}
+            path={prop.adminlayout + prop.path}
             component={prop.component}
             key={key}
           />
@@ -78,7 +78,7 @@ function Admin(props) {
   };
   const getBrandText = (path) => {
     for (let i = 0; i < routes.length; i++) {
-      if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
+      if (location.pathname.indexOf(routes[i].adminlayout + routes[i].path) !== -1) {
         return routes[i].name;
       }
     }

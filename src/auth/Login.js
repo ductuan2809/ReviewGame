@@ -53,7 +53,7 @@ const Login = (props) => {
       setPassword(e.target.value);
   }
   if(redirect)
-    return <Redirect to="/admin"/>;
+    return <Redirect to="/admin/games"/>;
 
     return (
       <div className="content">
