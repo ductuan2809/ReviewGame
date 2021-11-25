@@ -29,7 +29,7 @@ import "assets/css/nucleo-icons.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
-import Detail from "views/Detail";
+import Detail from "views/GameDetail/Detail";
 
 const userstate={
   role : false,
@@ -45,7 +45,8 @@ ReactDOM.render(
           <Route path="/guest" render={(props) => <Guest {...props} />} />
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
           <Route path="/rtl" render={(props) => <RTLLayout {...props} />} />
-          
+          {/* <Route path= "/detail-item" exact component={Detail}/> */}
+          <Route path="/detail-item" render={(props) => <Detail {...props} />} />
           <Redirect from="/" to="/guest/games" />
           {/* {userstate.role ? <Redirect from="/" to="/admin/dashboard" /> : <Redirect from="/" to="/rtl/dashboard" />} */}
         </Switch>

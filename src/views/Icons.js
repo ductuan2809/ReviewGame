@@ -31,6 +31,8 @@ import img4 from '../assets/img/big/img2.jpg';
 import img5 from '../assets/img/big/img1.jpg';
 import img6 from '../assets/img/big/img1.jpg';
 import { Link } from "react-router-dom";
+import Detail from "./GameDetail/Detail";
+
 
 
 
@@ -38,9 +40,44 @@ import { Link } from "react-router-dom";
 
 function Icons() {
 
+    
+    const [games, setGame] = useState([]);
+    // const [name, setName] = useState('');
+    // const [images, setImage] = useState([]);
+    // const [_id, setID] = useState('');
+    // const [score, setScore] = useState('');
+    // const [types, setTypes] = useState([]);
+
+    // useEffect(() => {
+    //     window.scrollTo(0, 0)
+    //   }, [])
+
+
     useEffect(() => {
-        window.scrollTo(0, 0)
-      }, [])
+        (
+            async () => {
+                const response = await fetch('http://localhost:5000/game/getALLGame',{
+                    method: 'GET',
+                    headers: {'Content-Type': 'application/json',}
+                });
+                const content = await response.json();
+    
+                if(response.status === 302)
+                {
+                  setGame(content.data);
+                //   setImage(content.data.images);
+                //   setID(content.data._id);
+                //   setScore(content.data.score);
+                //   setTypes(content.data.types);
+                  console.log(content.message)
+                }
+
+                //console.log(gd);
+        }    
+        )();
+      },[])
+
+    
     //mảng data ảo
     const cardinfo=[
         {image: img1,tile:"Genshin Impact",genre:"Open World",text:"Guaranteed Qiqi(5 stars) within 90rolls",id:"1"},
@@ -64,7 +101,7 @@ function Icons() {
     ]
 
     
-    const[item, setItem]=useState(cardinfo.slice(0,50))
+    const[item, setItem]=useState(games.slice(0,50))
     //trang đang active
     const [pagenumber,setpageNumber]=useState(0)
 
@@ -73,17 +110,17 @@ function Icons() {
     const prevpage=pagenumber*itemsPerPage
 
     //render item theo số lượng cố định từng trang
-    const displayItems=cardinfo.slice(prevpage,prevpage+itemsPerPage).map((item) => {
+    const displayItems=games.slice(prevpage,prevpage+itemsPerPage).map((item) => {
+        
         return(
             <Col xs="12" md="4">
                 <Card>
-                    <CardImg top width="100%" height="350px" style={{objectFit:"cover"}}  src={item.image} />
+                    <CardImg top width="100%" height="350px" style={{objectFit:"cover"}}  src={item.images[0]} />
                     <CardBody>
-                        <CardTitle> {item.tile}</CardTitle>
-                        <CardSubtitle>{item.genre}</CardSubtitle>
-                        <CardText>{item.text}</CardText>
-                        <Link to="/admin/detail" className="btn btn-secondary"> View </Link>
-                        
+                        <CardTitle> {item.name}</CardTitle>
+                        <CardSubtitle>Thể loại :{item.types.map((type) => <li>{type}</li>)}</CardSubtitle>
+                        <CardText>Score : {item.score}</CardText>
+                        <Link to={`/detail-item?id=${item._id}`} className="btn btn-secondary"> View </Link>
                     </CardBody>
                 </Card>
             </Col>

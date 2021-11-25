@@ -1,9 +1,9 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react/cjs/react.development";
+import { useState,useEffect } from "react/cjs/react.development";
 import ReactPaginate from "react-paginate";
-import './pagination.css'
+import '../pagination.css'
 // reactstrap components
 import {
   Button,
@@ -19,8 +19,10 @@ import {
   Col,
 } from "reactstrap";
 
-function Detail() {
+function Detail(props) {
   //comments
+
+  const {_id } = props;
   const commentarray=[
     {user:"Minh Thiện",date:"03/11/2021",score:"10",comment:"During my time with Genshin Impact, I fell in love with Qiqi. After only a few hours, my thoughts about what this adventure was faded away as it truly evolves into a unique experience. There’s a fine level of detail that went into crafting this beautiful world, and you can’t help but want to see every inch of it. Although the grind and the gachas systems are present, this is a game that I will gladly return to again and again. Regardless, all of this is available for free, so nothing stops you from finding out for yourself."},
     {user:"Minh Thiện",date:"03/11/2021",score:"10",comment:"During my time with Genshin Impact, I fell in love with Qiqi. After only a few hours, my thoughts about what this adventure was faded away as it truly evolves into a unique experience. There’s a fine level of detail that went into crafting this beautiful world, and you can’t help but want to see every inch of it. Although the grind and the gachas systems are present, this is a game that I will gladly return to again and again. Regardless, all of this is available for free, so nothing stops you from finding out for yourself."},
@@ -37,13 +39,50 @@ function Detail() {
     {user:"Minh Thiện",date:"03/11/2021",score:"10",comment:"During my time with Genshin Impact, I fell in love with Qiqi. After only a few hours, my thoughts about what this adventure was faded away as it truly evolves into a unique experience. There’s a fine level of detail that went into crafting this beautiful world, and you can’t help but want to see every inch of it. Although the grind and the gachas systems are present, this is a game that I will gladly return to again and again. Regardless, all of this is available for free, so nothing stops you from finding out for yourself."},
     {user:"Minh Thiện",date:"03/11/2021",score:"10",comment:"During my time with Genshin Impact, I fell in love with Qiqi. After only a few hours, my thoughts about what this adventure was faded away as it truly evolves into a unique experience. There’s a fine level of detail that went into crafting this beautiful world, and you can’t help but want to see every inch of it. Although the grind and the gachas systems are present, this is a game that I will gladly return to again and again. Regardless, all of this is available for free, so nothing stops you from finding out for yourself."},
     {user:"Minh Thiện",date:"03/11/2021",score:"10",comment:"During my time with Genshin Impact, I fell in love with Qiqi. After only a few hours, my thoughts about what this adventure was faded away as it truly evolves into a unique experience. There’s a fine level of detail that went into crafting this beautiful world, and you can’t help but want to see every inch of it. Although the grind and the gachas systems are present, this is a game that I will gladly return to again and again. Regardless, all of this is available for free, so nothing stops you from finding out for yourself."},
-    
   ]
   const[comments,setcomments]=useState(commentarray.slice(0,50))
   const[pagenumber,setpageNumber]=useState(0)
-
   const cmtPerPage=3
   const prevpage=pagenumber*cmtPerPage
+
+  const GetURLParameter = (sParam) =>{
+
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] === sParam) {
+            return (sParameterName[1].toString());
+        }
+    }
+  }
+
+useEffect(() => {
+  (    
+      async () => {               
+        const id = GetURLParameter('id')
+        const link = 'http://localhost:5000/game/getGameDetail'
+          const response = await fetch(link, {
+              method: 'GET',
+              headers: { 'Content-Type': 'application/json' },
+              body : JSON.stringify({id})
+          });
+         
+          const content = await response.json();
+          console.log(content.data)
+          if (content.status === 302) {
+            alert("success")
+          }
+          else{
+
+          }
+              
+      }
+  )();
+}, [])
+
+
+
 
   const displayCmt=commentarray.slice(prevpage,prevpage+cmtPerPage).map((item)=>{
     return(

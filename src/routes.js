@@ -12,7 +12,7 @@ import Login from "auth/Login";
 import Register from "auth/Register";
 import ForgotPass from "auth/ForgotPass";
 import ResetPassword from "auth/ResetPassword";
-import Detail from "views/Detail";
+import Detail from "views/GameDetail/Detail";
 import Dashboard from "views/Dashboard";
 
 const authRoutes = [
