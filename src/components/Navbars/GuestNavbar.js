@@ -36,7 +36,7 @@ import {
   ModalHeader,
 } from "reactstrap";
 
-function AdminNavbar(props) {
+function GuestNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
@@ -122,7 +122,17 @@ function AdminNavbar(props) {
                   <span className="d-lg-none d-md-block">Search</span>
                 </Button>
               </InputGroup>
-              <UncontrolledDropdown nav>
+              <InputGroup>
+                <Button color="link" href="/guest/login">
+                    Login
+                </Button>
+              </InputGroup>
+              <InputGroup>
+                <Button color="link" href="/guest/register">
+                    Register
+                </Button>
+              </InputGroup>
+              {/* <UncontrolledDropdown nav>
                 <DropdownToggle
                   caret
                   color="default"
@@ -213,7 +223,7 @@ function AdminNavbar(props) {
                     </Dialog>
                   </NavLink>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </UncontrolledDropdown> */}
               <li className="separator d-lg-none" />
             </Nav>
           </Collapse>
@@ -239,4 +249,4 @@ function AdminNavbar(props) {
   );
 }
 
-export default AdminNavbar;
+export default GuestNavbar;

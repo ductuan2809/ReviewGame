@@ -5,7 +5,8 @@ import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 
 
 const Login = (props) => {
-    const {setName } = props;
+    //const {setName} = props;
+    
     const [userName, setUsername] = useState('');
     const [userPwd, setPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
@@ -13,25 +14,26 @@ const Login = (props) => {
     const submit = async (e) => {
       e.preventDefault();
 
-      // const response = await fetch('https://lmsg03.azurewebsites.net/api/Authenticate/login',{
-      //     method: 'POST',
-      //     headers: {'Content-Type': 'application/json'},
-      //     credentials: 'include',
-      //     body: JSON.stringify({
-      //       userName,
-      //       userPwd
-      //     })
-      // });
+      const response = await fetch('http://localhost:5000/user/login',{
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          //credentials: 'include',
+          body: JSON.stringify({
+            userName,
+            userPwd
+          })
+      });
+
+      const content = await response.json();
+      console.log(response.status);
 
       // const content = await response.json();
-      // console.log(content.status)
-
-      // // const content = await response.json();
-      // if(content.status === 200)
-      // {
-      //   setRedirect(true);
-      //   setName(userName);
-      // }
+      if(content.message === 'Đăng nhập thành công!')
+      {
+        setRedirect(true);
+        localStorage.setItem("token", content.data);
+        console.log(localStorage.getItem("token"));
+      }
   }
 
   const handleUserNameChange = (e) =>{
@@ -40,8 +42,8 @@ const Login = (props) => {
   const handlePassChange = (e) =>{
       setPassword(e.target.value);
   }
-  // if(redirect)
-  //   return <Redirect to="/"/>;
+  if(redirect)
+    return <Redirect to="/admin"/>;
 
     return (
       <div className="content">
@@ -67,7 +69,7 @@ const Login = (props) => {
                     />
               </div>
                 <div className="form-group mb-4">
-                  <label>Mật khẩu</label>
+                  <label>Password</label>
                   <input
                     type="password" 
                     name="password"  
@@ -77,11 +79,11 @@ const Login = (props) => {
                     onChange={handlePassChange}
                     />
                 </div>
-                <input name="login" id="login" className="btn btn-block login-btn mb-4" type="submit" value="Đăng nhập"  />
+                <input id="login" className="btn btn-block login-btn mb-4" type="submit" value="Đăng nhập"/>
               </form>
-              <Link to="#!" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
+              <Link to="/guest/forgotpass" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
               <p className="login-card-footer-text"></p>
-              <a href="/admin/register" className="login-card-footer-text">Register ?</a>
+              <a href="/guest/register" className="login-card-footer-text">Register ?</a>
               <p className="login-card-footer-text"></p>
               <Link to="/" className="text-reset">Back to Home!</Link><p />
               <nav className="login-card-footer-nav">

@@ -18,7 +18,7 @@ var ps;
 function Sidebar(props) {
   const location = useLocation();
   const sidebarRef = React.useRef(null);
-  const islogin = true;
+  //const islogin = true;
   
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -41,7 +41,7 @@ function Sidebar(props) {
   const linkOnClick = () => {
     document.documentElement.classList.remove("nav-open");
   };
-  const { routes, rtlActive, logo } = props;
+  const { islogin,isadmin,routes, rtlActive, logo } = props;
   let logoImg = null;
   let logoText = null;
   if (logo !== undefined) {
@@ -108,8 +108,10 @@ function Sidebar(props) {
                 if (prop.redirect) return null;
                 //các route muốn ẩn thì thêm đk
                 if (prop.name=="Detail") return null;
-                if (!islogin) if (prop.name=="Dashboard" || prop.name=="User Profile" || prop.name=="Table List") return null;
+                if (prop.name=="ResetPass") return null;
+                if (!islogin) if (prop.name=="Dashboard" || prop.name=="User Profile" || prop.name=="Table List" ) return null;
                 if (islogin) if (prop.name=="Login" || prop.name=="Register" || prop.name =="Forgot Password" || prop.name=="Dashboard" || prop.name=="Table List") return null;
+                if (isadmin) if (prop.name=="Login" || prop.name=="Register" || prop.name =="Forgot Password" || prop.name=="Dashboard" || prop.name=="Table List") return null;
                 const checkrtl=()=>{
                   if (rtlActive) return prop.rtllayout + prop.path;
                   return prop.layout + prop.path;
@@ -151,7 +153,7 @@ function Sidebar(props) {
 
 Sidebar.defaultProps = {
   
-  rtlActive: true,
+  rtlActive: false,
   routes: [{}],
 };
 

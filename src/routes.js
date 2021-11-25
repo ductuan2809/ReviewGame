@@ -38,9 +38,9 @@ var routes = [
     path: "/login",
     name: "Login",
     rtlName: "Login",
-    icon: "tim-icons icon-atom",
+    icon: "tim-icons icon-chart-pie-36",
     component: Login,
-    layout: "/admin",
+    layout: "/guest",
     rtllayout: "/rtl",
   },
 
@@ -48,9 +48,9 @@ var routes = [
     path: "/register",
     name: "Register",
     rtlName: "Register",
-    icon: "tim-icons icon-atom",
+    icon: "tim-icons icon-bell-55",
     component: Register,
-    layout: "/admin",
+    layout: "/guest",
     rtllayout: "/rtl",
   },
 
@@ -60,7 +60,7 @@ var routes = [
     rtlName: "ResetPass",
     icon: "tim-icons icon-atom",
     component: ResetPassword,
-    layout: "/admin",
+    layout: "/guest",
     rtllayout: "/rtl",
   },
 
@@ -70,7 +70,7 @@ var routes = [
     rtlName: "Forgot Password",
     icon: "tim-icons icon-single-02",
     component: ForgotPass,
-    layout: "/admin",
+    layout: "/guest",
     rtllayout: "/rtl",
   },
 
@@ -80,7 +80,7 @@ var routes = [
     rtlName: "Games",
     icon: "tim-icons icon-atom",
     component: Icons,
-    layout: "/admin",
+    layout: "/guest",
     rtllayout: "/rtl",
   },
   // {

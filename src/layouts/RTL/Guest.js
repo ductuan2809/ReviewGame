@@ -16,7 +16,7 @@ import logo from "assets/img/react-logo.png";
 
 var ps;
 
-function Admin(props) {
+function Guest(props) {
   const location = useLocation();
   const mainPanelRef = React.useRef(null);
   const [sidebarOpened, setsidebarOpened] = React.useState(
@@ -63,7 +63,7 @@ function Admin(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/guest") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -88,8 +88,7 @@ function Admin(props) {
         <React.Fragment>
           <div className="wrapper">
             <Sidebar
-              islogin={true}
-              isadmin={true}
+              islogin={false}
               routes={routes}
               logo={{
                 outterLink: "https://www.facebook.com/phamduy.lap.16/",
@@ -99,7 +98,7 @@ function Admin(props) {
               toggleSidebar={toggleSidebar}
             />
             <div className="main-panel" ref={mainPanelRef}>
-              <AdminNavbar
+              <GuestNavbar
                 brandText={getBrandText(location.pathname)}
                 toggleSidebar={toggleSidebar}
                 sidebarOpened={sidebarOpened}
@@ -109,7 +108,8 @@ function Admin(props) {
               </Switch>
               {
                 // we don't want the Footer to be rendered on map page
-                location.pathname === "/admin/maps" ? null : <Footer fluid />
+                // location.pathname === "/admin/maps" ? null : 
+                <Footer fluid />
               }
             </div>
           </div>
@@ -117,4 +117,4 @@ function Admin(props) {
   );
 }
 
-export default Admin;
+export default Guest;

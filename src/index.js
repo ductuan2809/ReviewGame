@@ -21,6 +21,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import AdminLayout from "layouts/Admin/Admin.js";
 import RTLLayout from "layouts/RTL/RTL.js";
+import Guest from "layouts/RTL/Guest";
 
 import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
@@ -41,10 +42,11 @@ ReactDOM.render(
   <ThemeContextWrapper>
       <BrowserRouter>
         <Switch>
+          <Route path="/guest" render={(props) => <Guest {...props} />} />
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
           <Route path="/rtl" render={(props) => <RTLLayout {...props} />} />
           
-          <Redirect from="/" to="/admin/games" />
+          <Redirect from="/" to="/guest/games" />
           {/* {userstate.role ? <Redirect from="/" to="/admin/dashboard" /> : <Redirect from="/" to="/rtl/dashboard" />} */}
         </Switch>
       </BrowserRouter>

@@ -9,38 +9,69 @@ const Register = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [dateofBirth, setDateofBirth] = useState('');
-    const [gender, setGender] = useState('');
+    const [gender, setGender] = useState(0);
     const [confirmPassword, setConfirmpassword] = useState('');
     const [redirect, setRedirect] = useState(false);
 
     const submit = async (e) => {
         e.preventDefault();
 
-        // // const response = 
-        // await fetch('https://lmsg03.azurewebsites.net/api/Authenticate/register',{
-        //     method: 'POST',
-        //     headers: {'Content-Type': 'application/json'},
-        //     body: JSON.stringify({
-        //       userName,
-        //       userPwd,
-        //       confirmPassword,
-        //       email,
-        //       name,
-        //       phone,
-        //       gender,
-        //       dateofBirth
-        //     })
-        // });
-        // setRedirect(true);
-        // if(userName || userPwd || email || confirmPassword || name || phone ||  gender || dateofBirth ==='')
-        // {
-        //     alert("Bạn vui lòng nhập đầy đủ thông tin !")
-        // }
-        // // const content = await response.json();
+        console.log(userName);
+        console.log(userPwd);
+        console.log(confirmPassword);
+        console.log(email);
+        console.log(name);
+        console.log(phone);
+        console.log(gender);
+        console.log(dateofBirth);
+
+        const response = 
+        await fetch('http://localhost:5000/user/register',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              userName,
+              userPwd,
+              confirmPassword,
+              email,
+              name,
+              phone,
+              gender,
+              dateofBirth
+            })
+        });
+
+        const content = await response.json();
+
+
+        console.log(content.status);
+
+        if (content.message === 'Đăng ký thành công')
+        {
+          setRedirect(true);
+        }
+        else alert(content.message);
+
     }
 
-    // if(redirect)
-    //     return <Redirect to="/login"/>;
+    if(redirect)
+        return <Redirect to="/admin/login"/>;
+
+
+    const onChangeOptions1 = (e) =>{
+      //setGT(e.target.value);
+      setGender(0);
+    }
+    const onChangeOptions2 = (e) =>{
+      //setGT(e.target.value);
+      setGender(1);
+    }
+
+    const handleSetDOB = (e) =>{
+      setDateofBirth(e.target.value.toString());
+      //date = Date.parse(dateofBirth.toString());
+      //setdoB(new Date(dateofBirth));
+    }
 
     return (
       <div className="content">
@@ -60,23 +91,88 @@ const Register = () => {
                   <input 
                     type="text" 
                     name="username" 
+                    
                     className="form-control" 
                     placeholder="Your Account"
-                    onChange={e => setUsername(e.target.value)}
+                    onChange={e => setUsername(e.target.value.toString())}
                     />
               </div>
               <div className="form-group">
                  <label>Email</label>
                   <input 
                     type="text" 
-                    name="email" 
+                    name="email"
                     className="form-control"
                     data-type="email" 
                     placeholder="Your Email"
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value.toString())}
                     />
               </div>
-                <div className="form-group mb-4">
+              <div className="form-group">
+                 <label>Full Name</label>
+                  <input 
+                    type="text" 
+                    name="name" 
+                    className="form-control"
+                    data-type="text" 
+                    placeholder="Your Name"
+                    onChange={e => setName(e.target.value.toString())}
+                    />
+              </div>
+              <div className="form-group">
+                <Row>
+                  <Col>
+                    <label>Date of Birth</label>
+                      <input 
+                        className="form-control"
+                        //placeholder="dd-mm-yyyy"
+                        type="date"
+                        onChange={handleSetDOB}
+                      />
+                  </Col>
+                  <Col>
+                    <label>Phone</label>
+                      <input 
+                        defaultValue={dateofBirth}
+                        className="form-control"
+                        placeholder="Your Phone"
+                        //placeholder="dd-mm-yyyy"
+                        type="text"
+                        onChange={e => setPhone(e.target.value.toString())}
+                      />
+                  </Col>
+                  <Col>
+                  <div className="radio-buttons">
+                  <label>Gender</label>
+                    <Row>
+                      <Col className="pl-md-1">
+                        </Col>
+                      <Col className="pl-md-1">
+                        <input 
+                          type="radio" 
+                          value="male" 
+                          name="gender"
+                          //checked={gioitinh === 'male'}
+                          //defaultChecked name="gender"
+                          onChange={onChangeOptions1}
+                          /> Male
+                      </Col>
+                      <Col className="pl-md-1">
+                        <input 
+                          type="radio" 
+                          value="female" 
+                          name="gender"
+                          //checked={gioitinh === 'female'}
+                          // defaultChecked name="gender"
+                          onChange={onChangeOptions2}
+                          /> Female
+                      </Col>
+                    </Row>
+                  </div>
+                  </Col>
+                </Row>
+              </div>
+              <div className="form-group mb-4">
                   <label>Password</label>
                   <input
                     type="password" 
@@ -84,7 +180,7 @@ const Register = () => {
                     className="form-control" 
                     data-type="password" 
                     placeholder="**************"
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={e => setPassword(e.target.value.toString())}
                     />
                 </div>
                 <div className="form-group mb-4">
@@ -95,14 +191,14 @@ const Register = () => {
                     className="form-control" 
                     data-type="password" 
                     placeholder="**************"
-                    onChange={e => setConfirmpassword(e.target.value)}
+                    onChange={e => setConfirmpassword(e.target.value.toString())}
                     />
                 </div>
                 <input name="login" id="login" className="btn btn-block login-btn mb-4" type="submit" value="Đăng ký"  />
               </form>
-              <Link to="#!" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
+              <Link to="/guest/forgotpass" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
               <p className="login-card-footer-text"></p>
-              <a href="/admin/login" className="login-card-footer-text">Login ?</a>
+              <a href="/guest/login" className="login-card-footer-text">Login ?</a>
               <p className="login-card-footer-text"></p>
               <Link to="/" className="text-reset">Back to Home!</Link><p />
               <nav className="login-card-footer-nav">

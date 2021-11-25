@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, {SyntheticEvent, useState, useEffect} from "react"
 
 // reactstrap components
 import {
@@ -17,11 +17,117 @@ import {
 } from "reactstrap";
 
 function UserProfile() {
+  //const token = localStorage.getItem('token');
+  //const AuthStr = 'Bearer '.concat(token);
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [phone, setPhone] = useState('');
+  const [dateofBirth, setdoB] = useState('');
+  const [gender, setGender] = useState('');
+  //Date({ dateFormat: 'mm-dd-yyyy'});
+  const [redirect, setRedirect] = useState();
+  const [gioitinh, setGT] = useState('');
+  var sex;
+  //const [dateofBirth, setDate] = useState(Date);
+  //var gd_female = false;
+  var date ;
+
+  useEffect(() => {
+    (
+        async () => {
+            const response = await fetch('http://localhost:5000/user/findUserByToken',{
+                method: 'GET',
+                headers: {"Authorization": "Bearer " + localStorage.getItem("token")}
+            });
+            const content = await response.json();
+
+            if(content.message === 'Tìm thành công')
+            {
+              var d = content.data.dateofBirth;
+              
+              setName(content.data.name);
+              setEmail(content.data.email);
+              setUsername(content.data.userName);
+              setPhone(content.data.phone);
+              setGender(content.data.gender.toString());
+              console.log(gender);
+
+              setdoB(new Date(d).toISOString().split("T")[0]);
+            }
+            if(content.data.gender.toString() === '0')
+            {
+              setGT('male');
+            }
+            else {
+              setGT('female');
+            }
+            //console.log(gd);
+    }    
+    )();
+  },[])
+
+
+  const onChangeOptions1 = (e) =>{
+    setGT(e.target.value);
+    setGender(0);
+  }
+  const onChangeOptions2 = (e) =>{
+    setGT(e.target.value);
+    setGender(1);
+  }
+
+  const handleRadioButton_Male = (e) =>{
+    setGender(0);
+  }
+  const handleRadioButton_Female = (e) =>{
+    setGender(1);
+  }
+
+  const handleSetDOB = (e) =>{
+    setdoB(e.target.value.toString());
+    //date = Date.parse(dateofBirth.toString());
+    //setdoB(new Date(dateofBirth));
+  }
+
+  const Save = async (e) => {
+    // console.log(typeof(name));
+    // console.log(typeof(email));
+    // console.log(typeof(phone));
+    // console.log(typeof(gender));
+    // console.log(typeof(dateofBirth));
+    e.preventDefault();
+    const response = await fetch('http://localhost:5000/user/changeInfo',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")},
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          phone: phone,
+          gender: gender,
+          dateofBirth: dateofBirth
+        })
+    });
+
+    const content = await response.json();
+
+    if(content.message === 'Đổi thông tin thành công!')
+    {
+      setRedirect(true);
+      console.log("Success");
+    }
+    else console.log("Fail!");
+} 
+
   return (
     <>
       <div className="content">
+        <form onSubmit = {Save}>
         <Row>
-          <Col md="8">
+          <Col md="12">
             <Card>
               <CardHeader>
                 <h5 className="title">Edit Profile</h5>
@@ -29,95 +135,120 @@ function UserProfile() {
               <CardBody>
                 <Form>
                   <Row>
-                    <Col className="pr-md-1" md="5">
-                      <FormGroup>
-                        <label>Company (disabled)</label>
-                        <Input
-                          defaultValue="Creative Code Inc."
-                          disabled
-                          placeholder="Company"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="px-md-1" md="3">
+                    <Col className="pr-md-1" md="6">
                       <FormGroup>
                         <label>Username</label>
                         <Input
-                          defaultValue="michael23"
+                          defaultValue={username}
                           placeholder="Username"
                           type="text"
+                          readOnly
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="pl-md-1" md="4">
+                    <Col className="pl-md-1" md="6">
                       <FormGroup>
                         <label htmlFor="exampleInputEmail1">
                           Email address
                         </label>
-                        <Input placeholder="mike@email.com" type="email" />
+                        <Input defaultValue={email} placeholder={email} type="email" onChange={e => setEmail(e.target.value.toString())} />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
                     <Col className="pr-md-1" md="6">
                       <FormGroup>
-                        <label>First Name</label>
+                        <label>Full Name</label>
                         <Input
-                          defaultValue="Mike"
-                          placeholder="Company"
+                          defaultValue={name}
+                          placeholder=""
                           type="text"
+                          onChange={e => setName(e.target.value.toString())}
                         />
                       </FormGroup>
                     </Col>
                     <Col className="pl-md-1" md="6">
                       <FormGroup>
-                        <label>Last Name</label>
+                        <label>Date of Birth</label>
                         <Input
-                          defaultValue="Andrew"
-                          placeholder="Last Name"
-                          type="text"
+                          defaultValue={dateofBirth}
+                          //placeholder="dd-mm-yyyy"
+                          type="date"
+                          onChange={handleSetDOB}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col md="12">
-                      <FormGroup>
-                        <label>Address</label>
-                        <Input
-                          defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                          placeholder="Home Address"
-                          type="text"
-                        />
-                      </FormGroup>
+                  {/* <Row>
+                    <Col className="pl-md-1" md="12">
+                      <Row>
+                      <Col  className="pl-md-1" md="1">
+                        </Col>
+                        <Col  className="pl-md-1" md="2">
+                        <label>Gender</label>
+                        </Col>
+                        <Col className="pl-md-1" md="3">
+                          </Col>
+                          <Col className="pl-md-1" md="3">
+                            <Input type="radio" value="MALE" name="gender"/> Male
+                          </Col>
+                          <Col className="pl-md-1" md="3">
+                            <Input type="radio" value="FEMALE" name="gender"/> Male
+                          </Col>
+                      </Row>
                     </Col>
-                  </Row>
+                  </Row> */}
                   <Row>
-                    <Col className="pr-md-1" md="4">
+                    <Col className="pr-md-1" md="5">
                       <FormGroup>
                         <label>City</label>
                         <Input
-                          defaultValue="Mike"
-                          placeholder="City"
+                          defaultValue="None"
+                          placeholder="None"
                           type="text"
+                          readOnly
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="px-md-1" md="4">
+                    <Col className="px-md-1" md="0,5">
                       <FormGroup>
-                        <label>Country</label>
-                        <Input
-                          defaultValue="Andrew"
-                          placeholder="Country"
-                          type="text"
-                        />
                       </FormGroup>
                     </Col>
-                    <Col className="pl-md-1" md="4">
+                    <Col className="px-md-1" md="3">
                       <FormGroup>
-                        <label>Postal Code</label>
-                        <Input placeholder="ZIP Code" type="number" />
+                        <label>Gender</label>
+                        <div className="radio-buttons">
+                          <Row>
+                            <Col className="pl-md-1">
+                              </Col>
+                            <Col className="pl-md-1">
+                              <Input 
+                              type="radio" 
+                              value="male" 
+                              name="gender"
+                              checked={gioitinh === 'male'}
+                              //defaultChecked name="gender"
+                              onChange={onChangeOptions1}
+                              /> Male
+                            </Col>
+                            <Col className="pl-md-1">
+                              <Input 
+                              type="radio" 
+                              value="female" 
+                              name="gender"
+                              checked={gioitinh === 'female'}
+                             // defaultChecked name="gender"
+                              onChange={onChangeOptions2}
+                              /> Female
+                            </Col>
+                          </Row>
+                          </div>
+                      </FormGroup>
+                    </Col>
+                    <Col className="pl-md-1" md="3">
+                      <FormGroup>
+                        <label>Phone</label>
+                        <Input defaultValue={phone} placeholder={phone} type="text" onChange={e => setPhone(e.target.value.toString())}/>
                       </FormGroup>
                     </Col>
                   </Row>
@@ -127,11 +258,11 @@ function UserProfile() {
                         <label>About Me</label>
                         <Input
                           cols="80"
-                          defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in
-                            that two seat Lambo."
-                          placeholder="Here can be your description"
+                          defaultValue="Hế lô mèo méo meo mèo meo."
+                          placeholder="Hế lô mèo méo meo mèo meo"
                           rows="4"
                           type="textarea"
+                          readOnly
                         />
                       </FormGroup>
                     </Col>
@@ -139,53 +270,14 @@ function UserProfile() {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button className="btn-fill" color="primary" type="submit">
+                <Button className="btn-fill" color="primary" type='submit'>
                   Save
                 </Button>
               </CardFooter>
             </Card>
           </Col>
-          <Col md="4">
-            <Card className="card-user">
-              <CardBody>
-                <CardText />
-                <div className="author">
-                  <div className="block block-one" />
-                  <div className="block block-two" />
-                  <div className="block block-three" />
-                  <div className="block block-four" />
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <img
-                      alt="..."
-                      className="avatar"
-                      src={require("assets/img/emilyz.jpg").default}
-                    />
-                    <h5 className="title">Mike Andrew</h5>
-                  </a>
-                  <p className="description">Ceo/Co-Founder</p>
-                </div>
-                <div className="card-description">
-                  Do not be scared of the truth because we need to restart the
-                  human foundation in truth And I love you like Kanye loves
-                  Kanye I love Rick Owens’ bed design but the back is...
-                </div>
-              </CardBody>
-              <CardFooter>
-                <div className="button-container">
-                  <Button className="btn-icon btn-round" color="facebook">
-                    <i className="fab fa-facebook" />
-                  </Button>
-                  <Button className="btn-icon btn-round" color="twitter">
-                    <i className="fab fa-twitter" />
-                  </Button>
-                  <Button className="btn-icon btn-round" color="google">
-                    <i className="fab fa-google-plus" />
-                  </Button>
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
         </Row>
+        </form>
       </div>
     </>
   );
