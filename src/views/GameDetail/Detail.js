@@ -48,6 +48,7 @@ function Detail(props) {
   const[types, setTypes]=useState('');
   const[image, setImage]=useState('');
   const[result, setResult]=useState({});
+  const[evaluates, setEvaluates]=useState([]);
 
   const GetURLParameter = (sParam) =>{
 
@@ -82,6 +83,18 @@ useEffect(() => {
         } else {
 
         }     
+
+
+        //get game comment
+        const response2 = await get('http://localhost:5000/evaluate/getEvaluateOfGame', { gID: id });
+        console.log(response2);
+
+        if (response2.success) {
+          //làm gì đó
+          setEvaluates(response2.data)
+        } else {
+
+        }    
       }
   )();
 }, [])
@@ -89,16 +102,16 @@ useEffect(() => {
 
 
 
-  const displayCmt=commentarray.slice(prevpage,prevpage+cmtPerPage).map((item)=>{
+  const displayCmt=evaluates.slice(prevpage,prevpage+cmtPerPage).map((item)=>{
     return(
       <Form >
                 <Row>
                     <Col className="pr-md-1" md="6">
                       <FormGroup>
-                        <label>{item.user}</label>
+                        <label>{item.name}</label>
                         
                         <div className="card-description">
-                        {item.date}
+                        {new Date(item.dateEvaluate).toISOString().split("T")[0]}
                   
                         </div>
                       </FormGroup>
