@@ -1,6 +1,7 @@
 import React, {SyntheticEvent, useState} from "react";
 import { Redirect,Link } from "react-router-dom";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
+import { get, post } from "../helper/fetch.helper";
 
 
 
@@ -14,7 +15,16 @@ const Login = (props) => {
     const submit = async (e) => {
       e.preventDefault();
 
-      const response = await fetch('http://localhost:5000/user/login',{
+      const response = await post('http://localhost:5000/user/login', { userName: userName, userPwd: userPwd });
+      console.log(response);
+      if(response.success)
+      {
+        setRedirect(true);
+        localStorage.setItem("token", response.data);
+        console.log(localStorage.getItem("token"));
+      }
+
+      /*const response = await fetch('http://localhost:5000/user/login',{
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           //credentials: 'include',
@@ -33,7 +43,7 @@ const Login = (props) => {
         setRedirect(true);
         localStorage.setItem("token", content.data);
         console.log(localStorage.getItem("token"));
-      }
+      }*/
   }
 
   const handleUserNameChange = (e) =>{

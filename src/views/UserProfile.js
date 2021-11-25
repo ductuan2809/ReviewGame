@@ -1,4 +1,5 @@
 
+import { get } from "helper/fetch.helper";
 import React, {SyntheticEvent, useState, useEffect} from "react"
 
 // reactstrap components
@@ -37,26 +38,26 @@ function UserProfile() {
   useEffect(() => {
     (
         async () => {
-            const response = await fetch('http://localhost:5000/user/findUserByToken',{
+            /*const response = await fetch('http://localhost:5000/user/findUserByToken',{
                 method: 'GET',
                 headers: {"Authorization": "Bearer " + localStorage.getItem("token")}
             });
-            const content = await response.json();
-
-            if(content.message === 'Tìm thành công')
+            const content = await response.json();*/
+            const response = await get('http://localhost:5000/user/findUserByToken',{},{"Authorization": "Bearer " + localStorage.getItem("token")});
+            if(response.success)
             {
-              var d = content.data.dateofBirth;
+              var d = response.data.dateofBirth;
               
-              setName(content.data.name);
-              setEmail(content.data.email);
-              setUsername(content.data.userName);
-              setPhone(content.data.phone);
-              setGender(content.data.gender.toString());
+              setName(response.data.name);
+              setEmail(response.data.email);
+              setUsername(response.data.userName);
+              setPhone(response.data.phone);
+              setGender(response.data.gender.toString());
               console.log(gender);
 
               setdoB(new Date(d).toISOString().split("T")[0]);
             }
-            if(content.data.gender.toString() === '0')
+            if(response.data.gender.toString() === '0')
             {
               setGT('male');
             }
