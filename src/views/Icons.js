@@ -70,11 +70,7 @@ function Icons() {
         )();
       },[])
 
-    
-   
-    
 
-    
     const[item, setItem]=useState(games.slice(0,50))
     //trang đang active
     const [pagenumber,setpageNumber]=useState(0)
@@ -106,8 +102,6 @@ function Icons() {
     
     const changePage=({selected})=>{
         setpageNumber(selected);
-        
-    
     }
     
     return (
