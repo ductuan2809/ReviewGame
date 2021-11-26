@@ -88,24 +88,32 @@ useEffect(() => {
         }
         
         
-        //get user comment
-        const uResponse = await get('http://localhost:5000/evaluate/getUserEvaluate', { gID: id }, {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
-        console.log(uResponse);
-
-        if (uResponse.success) {
-          setUserEvaluate(uResponse.data);
-          setExist(true);
-          setUserScore(uResponse.data.score);
-          setUserReview(uResponse.data.comment);
-          console.log(evaluateExist);
-        } else {
+        if (localStorage.getItem("token") == null) {
           let userEva = {
             score: "",
-            comment: uResponse.message,
+            comment: "Bạn chưa đăng nhập!",
           }
           setUserEvaluate(userEva);
+        } else {
+          //get user comment
+          const uResponse = await get('http://localhost:5000/evaluate/getUserEvaluate', { gID: id }, {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
+          console.log(uResponse);
+
+          if (uResponse.success) {
+            setUserEvaluate(uResponse.data);
+            setExist(true);
+            setUserScore(uResponse.data.score);
+            setUserReview(uResponse.data.comment);
+            console.log(evaluateExist);
+          } else {
+            let userEva = {
+              score: "",
+              comment: uResponse.message,
+            }
+            setUserEvaluate(userEva);
+          }
         }
       }
   )();
@@ -114,22 +122,24 @@ useEffect(() => {
 
 const submit = async (e) => {
   e.preventDefault();
-  
+
   const id = GetURLParameter('id')
   console.log(id);
 
-  if (!evaluateExist) {
+  if (!evaluateExist && localStorage.getItem("token") != null) {
     const response = await post('http://localhost:5000/evaluate/addEvaluate', { gID: id, score: userScore, comment: userReview }, {
       'Content-Type': 'application/json',
       Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
     console.log(response);
     alert(response.message);
-  } else {
+  } else if (evaluateExist){
     const response = await post('http://localhost:5000/evaluate/editEvaluate', { gID: id, score: userScore, comment: userReview }, {
       'Content-Type': 'application/json',
       Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
     console.log(response);
     alert(response.message);
+  } else {
+    alert("Bạn phải đăng nhập để tiến hành đánh giá");
   }
 }
 
