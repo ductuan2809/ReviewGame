@@ -7,7 +7,7 @@ import { get, post } from "../helper/fetch.helper";
 
 const Login = (props) => {
     //const {setName} = props;
-    
+    const tokenadmin = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJXZWIgUmV2aWV3IEdhbWUiLCJkYXRhIjp7ImlkIjoiNjE5YjQ4NmY3ODBiZDIzYzIwYzFjYjQ0Iiwicm9sZSI6MX0sImlhdCI6MTYzNzg5ODQyMDU5NywiZXhwIjoxNjM3OTg0ODIwNTk3fQ.M2kFEv8Y1pNxof4c0gD25M4ieibA9yxDbKfkqU7sjI8')
     const [userName, setUsername] = useState('');
     const [userPwd, setPassword] = useState('');
     const [redirect, setRedirect] = useState(false);

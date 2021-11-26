@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import './pagination.css'
 import ReactPaginate from "react-paginate";
+import { Icon } from "@material-ui/core";
 function Tables() {
   const [games, setGame] = useState([]);
   useEffect(() => {
@@ -43,7 +44,9 @@ function Tables() {
 
 
 
+const handleDelete = () => {
 
+}
 
 
 const[item, setItem]=useState(games.slice(0,50))
@@ -65,11 +68,10 @@ const displayItems=games.slice(prevpage,prevpage+itemsPerPage).map((item) => {
         <td>{item.review}</td>
         <td>{item.publisher}</td>
         <td>{item.types.map((type) => <li>{type}</li>)}</td>
-        
-        
-        
-        <Link to={`/detail-item?id=${item._id}`} className="btn btn-primary"> Sửa </Link>
-        <Button>Xóa</Button>
+        <td>  
+          <Link to={`/detail-item?id=${item._id}`} className="btn btn-primary"><i className="fas fa-pen"></i></Link>
+          <Button color='danger' onClick={handleDelete}><i className="fas fa-trash"></i></Button>
+        </td>
         
       </tr>
       </>
@@ -93,18 +95,19 @@ const changePage=({selected})=>{
             <Card className="card-plain">
               <CardHeader>
                 <CardTitle tag="h4">Games</CardTitle>
-                <Link to="/admin/add" className="btn btn-primary"> Thêm </Link>
+                <Link to="/admin/add" className="btn btn-primary"><i className="fas fa-plus"></i></Link>
               </CardHeader>
               <CardBody>
                 <Table className="tablesorter" responsive>
                   <thead className="text-primary">
                     <tr>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Score</th>
-                      <th>Review</th>
-                      <th>Publisher</th>
-                      <th>Genre(s)</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Score</th>
+                      <th scope="col">Review</th>
+                      <th scope="col">Publisher</th>
+                      <th scope="col">Genre(s)</th>
+                      <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>

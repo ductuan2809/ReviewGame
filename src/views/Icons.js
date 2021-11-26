@@ -70,14 +70,7 @@ function Icons() {
         )();
       },[])
 
-<<<<<<< HEAD
-=======
-    
-   
-    
 
-    
->>>>>>> 7f0a56ba9d471b8f58ccb5ecadb63c1ec769cfef
     const[item, setItem]=useState(games.slice(0,50))
     //trang đang active
     const [pagenumber,setpageNumber]=useState(0)
