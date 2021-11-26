@@ -142,7 +142,7 @@ useEffect(() => {
     )
   })
 
-  const pageCount=Math.ceil(commentarray.length/cmtPerPage)
+  const pageCount=Math.ceil(evaluates.length/cmtPerPage)
 
   const changePage=({selected})=>{
         setpageNumber(selected);

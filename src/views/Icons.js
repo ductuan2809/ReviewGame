@@ -77,30 +77,6 @@ function Icons() {
         )();
       },[])
 
-    
-    //mảng data ảo
-    const cardinfo=[
-        {image: img1,tile:"Genshin Impact",genre:"Open World",text:"Guaranteed Qiqi(5 stars) within 90rolls",id:"1"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img4,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: "https://storage.googleapis.com/webreviewgame-518cf.appspot.com/Sekiro%20-%20Shadows%20Die%20Twice%20Images/images-163739313349055.jpg?GoogleAccessId=firebase-adminsdk-l8b18%40webreviewgame-518cf.iam.gserviceaccount.com&Expires=16446992400&Signature=Pr4EpjaJsm%2FK3wgseY1XH9TtWjK9CjpIVeWN1eRzhMfxzRF1vezV92Q9w2PF7Oj1hFB9KI%2B3%2FwVOJzVATXciu5foEYc%2BtzXqRsdtwRVy39mJ4gB9LhJIMP72d%2FhjrmcasvgJCXL%2F0qq9pTVJqUHDIuImm06tTCmNuAWr3m%2FcJRXySaXKoo0Yq%2BbyLpWSVNMjjpuzndZ4O6biEsRokC060ftvjzrXN9AKj1qQBBVtSSwmzusMpqi1tYZkqXTdW%2FLbrDDCRFqgvLSOU1dlG7Hs62Qez4eqcAlIVpiMj9NMdQRI5H5btQfCTWgZ0BiHDj4BAIRH0hxwljLotHGUCRTeow%3D%3D",tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img1,tile:"Genshin Impact",genre:"Open World",text:"Guaranteed Qiqi(5 stars) within 90rolls"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img4,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-        {image: img2,tile:"Elden Ring",genre:"Open World, RPG, Casual",text:"Chilling Adventure"},
-
-    ]
-
-    
     const[item, setItem]=useState(games.slice(0,50))
     //trang đang active
     const [pagenumber,setpageNumber]=useState(0)
@@ -126,14 +102,12 @@ function Icons() {
             </Col>
         )
     })
-    const pageCount=Math.ceil(cardinfo.length/itemsPerPage)
+    const pageCount=Math.ceil(games.length/itemsPerPage)
 
     
     
     const changePage=({selected})=>{
         setpageNumber(selected);
-        
-    
     }
     
     return (

@@ -80,7 +80,7 @@ var routes = [
     rtlName: "Games",
     icon: "tim-icons icon-atom",
     component: Icons,
-    layout: "/guest",
+    layout: "/admin",
     rtllayout: "/rtl",
   },
   // {
