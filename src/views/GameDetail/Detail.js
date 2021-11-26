@@ -31,11 +31,15 @@ function Detail(props) {
   const[pagenumber,setpageNumber]=useState(0)
   const cmtPerPage=3
   const prevpage=pagenumber*cmtPerPage
+  const[evaluateExist, setExist]=React.useState(false);
   const[score, setScore]=useState('');
   const[types, setTypes]=useState('');
   const[image, setImage]=useState('');
   const[result, setResult]=useState({});
   const[evaluates, setEvaluates]=useState([]);
+  const[userEvaluate, setUserEvaluate]=useState({});
+  const[userScore, setUserScore]=useState();
+  const[userReview, setUserReview]=useState('');
 
   const GetURLParameter = (sParam) =>{
 
@@ -68,24 +72,66 @@ useEffect(() => {
           setScore(response.data.score.toString() + "/10");
           setImage(response.data.images[0]);
         } else {
-
+          alert(response.message);
         }     
 
 
         //get game comment
-        const response2 = await get('http://localhost:5000/evaluate/getEvaluateOfGame', { gID: id });
-        console.log(response2);
+        const eResponse = await get('http://localhost:5000/evaluate/getEvaluateOfGame', { gID: id });
+        console.log(eResponse);
 
-        if (response2.success) {
+        if (eResponse.success) {
           //làm gì đó
-          setEvaluates(response2.data)
+          setEvaluates(eResponse.data);
         } else {
+          alert(response.message);
+        }
+        
+        
+        //get user comment
+        const uResponse = await get('http://localhost:5000/evaluate/getUserEvaluate', { gID: id }, {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
+        console.log(uResponse);
 
-        }    
+        if (uResponse.success) {
+          setUserEvaluate(uResponse.data);
+          setExist(true);
+          setUserScore(uResponse.data.score);
+          setUserReview(uResponse.data.comment);
+          console.log(evaluateExist);
+        } else {
+          let userEva = {
+            score: "",
+            comment: uResponse.message,
+          }
+          setUserEvaluate(userEva);
+        }
       }
   )();
 }, [])
 
+
+const submit = async (e) => {
+  e.preventDefault();
+  
+  const id = GetURLParameter('id')
+  console.log(id);
+
+  if (!evaluateExist) {
+    const response = await post('http://localhost:5000/evaluate/addEvaluate', { gID: id, score: userScore, comment: userReview }, {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
+    console.log(response);
+    alert(response.message);
+  } else {
+    const response = await post('http://localhost:5000/evaluate/editEvaluate', { gID: id, score: userScore, comment: userReview }, {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
+    console.log(response);
+    alert(response.message);
+  }
+}
 
 
 
@@ -133,6 +179,14 @@ useEffect(() => {
 
   const changePage=({selected})=>{
         setpageNumber(selected);
+  }
+
+  const handleScoreChange = (e) =>{
+    setUserScore(e.target.value);
+  }
+
+  const handleReviewChange = (e) =>{
+    setUserReview(e.target.value);
   }
   
   return (
@@ -205,16 +259,17 @@ useEffect(() => {
               
             </Card>
             <Card>
+              <Form method="post" onSubmit={submit}>
               <CardBody>
-                <Form >
+                <Form>
                 <Row>
                     <Col className="pr-md-1" md="6">
                       <FormGroup>
                         <label>Your Score</label>
                         
                         <Input
-                          
-                          defaultValue="0"
+                          onChange={handleScoreChange}
+                          defaultValue={userEvaluate.score}
                           placeholder="On a scale of 10"
                           type="number"
                           max="10"
@@ -229,8 +284,8 @@ useEffect(() => {
                       <FormGroup>
                       <label>Your review</label>
                       <Input
-                          
-                          
+                          onChange={handleReviewChange}
+                          defaultValue={userEvaluate.comment}
                           placeholder="Here can be your review"
                           rows="4"
                           type="textarea"
@@ -242,9 +297,10 @@ useEffect(() => {
 
               </CardBody>
               <CardFooter>
-                
-                <Link to="/" className="btn-fill btn btn-primary" color="primary">Submit</Link>
+                <Input id="submit" className="btn-fill btn btn-primary" color="primary" type="submit" value="Submit"/>
+                {/* <Link type="submit" className="btn-fill btn btn-primary" color="primary">Submit</Link> */}
               </CardFooter>
+              </Form>
             </Card>
             <Card>
               <CardHeader> Comments</CardHeader>
