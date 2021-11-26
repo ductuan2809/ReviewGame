@@ -15,7 +15,7 @@ import {
 import './pagination.css'
 import ReactPaginate from "react-paginate";
 import { Dialog,DialogContentText,DialogTitle,DialogActions,DialogContent } from "@material-ui/core";
-import { get } from "jquery";
+import {get, post} from "helper/fetch.helper"
 
 function ManageUser() {
     const [users, setUsers] = useState([]);
@@ -27,27 +27,16 @@ function ManageUser() {
     useEffect(() => {
       (
           async () => {
-            // const response = await get('http://localhost:5000/user/getALLUser',{
-            //   'Content-Type': 'application/json',
-            //   Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
-            // console.log(response);
-            // if(response.success)
-            // {
-            //   setUsers(response.data);
-            // }
-            //   //console.log(gd);
-
-            const response = await fetch('http://localhost:5000/user/getALLUser',{
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")},
-          });
-      
-          const content = await response.json();
-          if(response.status === 302)
+            
+            const response = await get('http://localhost:5000/user/getALLUser',{},{
+              'Content-Type': 'application/json',
+              Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
+    
+            if(response.success)
             {
-              setUsers(content.data);
+              setUsers(response.data);
+            } else {
+              alert(response.message);
             }
       }    
       )();
@@ -66,43 +55,28 @@ function ManageUser() {
   // }
   
   const handleBan = async (id_user) => {
-    const response = await fetch('http://localhost:5000/user/banUser',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")},
-      body: JSON.stringify({
-        id_user
-      })
-    });
-
-    const content = await response.json();
-    if(response.status === 200)
-    {
-      alert("Khóa thành công tài khoản :"+{username});
+  
+    const response = await post('http://localhost:5000/user/banUser', {id: id_user}, {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
+  
+    if (response.success) {
+      alert("Khóa thành công tài khoản: "+username);
+    } else {
+      alert("Có lỗi gì đó xảy ra !")
     }
-    else alert("Có lỗi gì đó xảy ra !");
-    //alert("Ban");
   }
 
   const handleUnBan = async (id_user) => {
-    const response = await fetch('http://localhost:5000/user/unbanUser',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")},
-      body: JSON.stringify({
-        id_user
-      })
-    });
-
-    const content = await response.json();
-    if(response.status === 200)
-    {
-      alert("Mở khóa thành công tài khoản :"+{username});
+    const response = await post('http://localhost:5000/user/unbanUser', {id: id_user}, {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
+    
+    if (response.success) {
+      alert("Mở khóa thành công tài khoản: "+username);
+    } else {
+      alert("Có lỗi gì đó xảy ra !")
     }
-    else alert("Có lỗi gì đó xảy ra !");
-    //alert("Unban");
   }
 
   const handleClickOpen = () => {
