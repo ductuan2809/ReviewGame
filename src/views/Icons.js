@@ -25,6 +25,7 @@ import './pagination.css'
 
 import { Link } from "react-router-dom";
 import Detail from "./GameDetail/Detail";
+import {get} from "helper/fetch.helper"
 
 
 
@@ -49,20 +50,19 @@ function Icons() {
     useEffect(() => {
         (
             async () => {
-                const response = await fetch('http://localhost:5000/game/getALLGame',{
-                    method: 'GET',
-                    headers: {'Content-Type': 'application/json',}
-                });
-                const content = await response.json();
+                const response = await get('http://localhost:5000/game/getGameSort');
+                console.log(response);
     
-                if(response.status === 302)
+                if(response.success)
                 {
-                  setGame(content.data);
+                  setGame(response.data);
                 //   setImage(content.data.images);
                 //   setID(content.data._id);
                 //   setScore(content.data.score);
                 //   setTypes(content.data.types);
-                  console.log(content.message)
+                  console.log(response.message)
+                } else {
+                    alert(response.message);
                 }
 
                 //console.log(gd);
@@ -90,6 +90,7 @@ function Icons() {
                         <CardTitle> {item.name}</CardTitle>
                         <CardSubtitle>Thể loại :{item.types.map((type) => <li>{type}</li>)}</CardSubtitle>
                         <CardText>Score : {item.score}</CardText>
+                        <CardText>Overall: {item.review}</CardText>
                         <Link to={`/detail-item?id=${item._id}`} className="btn btn-secondary"> View </Link>
                     </CardBody>
                 </Card>
