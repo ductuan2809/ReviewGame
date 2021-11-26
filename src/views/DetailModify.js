@@ -21,7 +21,7 @@ import {
 } from "reactstrap";
 import { get, post } from "../../helper/fetch.helper";
 
-function Detail(props) {
+function DetailModify(props) {
   //comments
   const {_id } = props;
   const commentarray=[
@@ -153,10 +153,12 @@ useEffect(() => {
                         <label >
                           Nhà phát hành
                         </label>
-                        <div className="form-control">
-                        {result.publisher}
-                  
-                        </div>
+                        <Input
+                          defaultValue={result.publisher}
+                          
+                          type="text"
+                        />
+                        
                       </FormGroup>
                     </Col>
                   </Row>
@@ -165,11 +167,13 @@ useEffect(() => {
                     <Col className="pl-md-1" md="6">
                       <FormGroup>
                         <label>User's Score</label>
-
-                        <div className="form-control">
-                        {score}
-                  
-                        </div>
+                        <Input
+                          defaultValue={score}
+                          min="0"
+                          max="10"
+                          type="number"
+                        />
+                        
                       </FormGroup>
                     </Col>
                   </Row>
@@ -177,11 +181,12 @@ useEffect(() => {
                     <Col md="12">
                       <FormGroup>
                         <label>Thể loại</label>
+                        <Input
+                          defaultValue={types}
+                          
+                          type="text"
+                        />
 
-                        <div className="form-control">
-                        {types}
-                  
-                        </div>
                       </FormGroup>
                     </Col>
                   </Row>
@@ -189,10 +194,11 @@ useEffect(() => {
                     <Col md="12">
                       <FormGroup>
                         <label>Sumary</label>
-                        <div className="card-description">
-                        {result.description}
-                  
-                        </div>
+                        <Input
+                          defaultValue={result.description}
+                          
+                          type="text"
+                        />
                       </FormGroup>
                     </Col>
                     
@@ -204,71 +210,8 @@ useEffect(() => {
               </CardBody>
               
             </Card>
-            <Card>
-              <CardBody>
-                <Form >
-                <Row>
-                    <Col className="pr-md-1" md="6">
-                      <FormGroup>
-                        <label>Your Score</label>
-                        
-                        <Input
-                          
-                          defaultValue="0"
-                          placeholder="On a scale of 10"
-                          type="number"
-                          max="10"
-                          min="0"
-                        />
-                      </FormGroup>
-                    </Col>
-                    
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <FormGroup>
-                      <label>Your review</label>
-                      <Input
-                          
-                          
-                          placeholder="Here can be your review"
-                          rows="4"
-                          type="textarea"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </Form>
-
-              </CardBody>
-              <CardFooter>
-                
-                <Link to="/" className="btn-fill btn btn-primary" color="primary">Submit</Link>
-              </CardFooter>
-            </Card>
-            <Card>
-              <CardHeader> Comments</CardHeader>
-              <CardBody>
-                
-                {displayCmt}
-                
-
-                <ReactPaginate
-                previousLabel={"<"}
-                nextLabel={">"}
-                pageCount={pageCount}
-                onPageChange={changePage}
-                containerClassName={"paginationBttns"}
-                previousLinkClassName={"previousBttn"}
-                nextLinkClassName={"nextBttn"}
-                disabledClassName={"paginationDisabled"}
-                activeClassName={"paginationActive"}
-                
-                
-                />
-
-              </CardBody>
-            </Card>
+            
+            
           </Col>
           <Col md="4">
             <Card className="card-user">
@@ -313,4 +256,4 @@ useEffect(() => {
   );
 }
 
-export default Detail;
+export default DetailModify;

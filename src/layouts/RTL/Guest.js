@@ -63,10 +63,10 @@ function Guest(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/guest") {
+      if (prop.guestlayout === "/guest") {
         return (
           <Route
-            path={prop.layout + prop.path}
+            path={prop.guestlayout + prop.path}
             component={prop.component}
             key={key}
           />
@@ -78,7 +78,7 @@ function Guest(props) {
   };
   const getBrandText = (path) => {
     for (let i = 0; i < routes.length; i++) {
-      if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
+      if (location.pathname.indexOf(routes[i].guestlayout + routes[i].path) !== -1) {
         return routes[i].name;
       }
     }
@@ -89,6 +89,7 @@ function Guest(props) {
           <div className="wrapper">
             <Sidebar
               islogin={false}
+              isadmin={false}
               routes={routes}
               logo={{
                 outterLink: "https://www.facebook.com/phamduy.lap.16/",

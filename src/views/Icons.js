@@ -23,13 +23,6 @@ import {
 import ReactPaginate from "react-paginate";
 import './pagination.css'
 
-
-import img1 from '../assets/img/big/genshin.JPG';
-import img2 from '../assets/img/big/ER.JPG';
-import img3 from '../assets/img/big/weed.JPG';
-import img4 from '../assets/img/big/img2.jpg';
-import img5 from '../assets/img/big/img1.jpg';
-import img6 from '../assets/img/big/img1.jpg';
 import { Link } from "react-router-dom";
 import Detail from "./GameDetail/Detail";
 
@@ -77,6 +70,14 @@ function Icons() {
         )();
       },[])
 
+<<<<<<< HEAD
+=======
+    
+   
+    
+
+    
+>>>>>>> 7f0a56ba9d471b8f58ccb5ecadb63c1ec769cfef
     const[item, setItem]=useState(games.slice(0,50))
     //trang đang active
     const [pagenumber,setpageNumber]=useState(0)
@@ -114,7 +115,7 @@ function Icons() {
         <div className="content">
             <Row>
                 <Col md="12">
-                    <h5 className="mb-3">Games</h5>
+                    
                     <Row>
                         {displayItems}
                         
