@@ -16,6 +16,7 @@ import Detail from "views/GameDetail/Detail";
 import Dashboard from "views/Dashboard";
 import DetailAdd from "views/DetailAdd";
 import ManageUser from "views/ManageUser";
+import DetailModify from "views/DetailModify";
 
 const authRoutes = [
 
@@ -167,6 +168,16 @@ var routes = [
     rtlName: "Add-games",
     icon: "tim-icons icon-puzzle-10",
     component: DetailAdd,
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
+  },
+  {
+    path: "/detail-modify",
+    name: "Detail-Modify",
+    rtlName: "Detail-Modify",
+    icon: "tim-icons icon-puzzle-10",
+    component: DetailModify,
     adminlayout: "/admin",
     guestlayout: "/guest",
     userlayout: "/user",

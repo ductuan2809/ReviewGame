@@ -69,7 +69,7 @@ const displayItems=games.slice(prevpage,prevpage+itemsPerPage).map((item) => {
         <td>{item.publisher}</td>
         <td>{item.types.map((type) => <li>{type}</li>)}</td>
         <td>  
-          <Link to={`/detail-item?id=${item._id}`} className="btn btn-primary"><i className="fas fa-pen"></i></Link>
+          <Link to={`/detail-modify?id=${item._id}`} className="btn btn-primary"><i className="fas fa-pen"></i></Link>
           <Button color='danger' onClick={handleDelete}><i className="fas fa-trash"></i></Button>
         </td>
         
@@ -95,7 +95,7 @@ const changePage=({selected})=>{
             <Card className="card-plain">
               <CardHeader>
                 <CardTitle tag="h4">Games</CardTitle>
-                <Link to="/admin/add" className="btn btn-primary"><i className="fas fa-plus"></i></Link>
+                <Link to="/admin/add-games" className="btn btn-primary"> Thêm </Link>
               </CardHeader>
               <CardBody>
                 <Table className="tablesorter" responsive>

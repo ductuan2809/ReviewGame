@@ -101,23 +101,17 @@ function DetailAdd() {
                   </Row>
                   <Row>
                     <Col md="9">
+                      <label>Image</label>
                       <FormGroup>
-                        <label>Image</label>
+                        <label>Select image</label>
                         <Input
-                          cols="80"
-                          
-                          placeholder="Here can be your sumary"
-                          
-                          type="text"
+                          type="file"
                         />
                         
                       </FormGroup>
                       
                     </Col>
-                    <Col md="2">
-                    <label></label>
-                    <Button>Chọn</Button>
-                    </Col>
+                    
                   </Row>
                   
                   

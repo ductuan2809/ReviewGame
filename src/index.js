@@ -22,6 +22,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import AdminLayout from "layouts/Admin/Admin.js";
 import RTLLayout from "layouts/RTL/RTL.js";
 import Guest from "layouts/RTL/Guest";
+import User from "layouts/RTL/User";
 
 import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
@@ -30,6 +31,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import Detail from "views/GameDetail/Detail";
+import DetailModify from "views/DetailModify";
 
 const userstate={
   role : false,
@@ -44,9 +46,10 @@ ReactDOM.render(
         <Switch>
           <Route path="/guest" render={(props) => <Guest {...props} />} />
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-          <Route path="/rtl" render={(props) => <RTLLayout {...props} />} />
+          <Route path="/user" render={(props) => <User {...props} />} />
           {/* <Route path= "/detail-item" exact component={Detail}/> */}
           <Route path="/detail-item" render={(props) => <Detail {...props} />} />
+          <Route path="/detail-modify" render={(props) => <DetailModify {...props} />} />
           <Redirect from="/" to="/guest/games" />
           {/* {userstate.role ? <Redirect from="/" to="/admin/dashboard" /> : <Redirect from="/" to="/rtl/dashboard" />} */}
         </Switch>
