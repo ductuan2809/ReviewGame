@@ -148,7 +148,7 @@ useEffect(() => {
                 <Form>
                   <Row>
                     
-                    <Col className="pl-md-1" md="4">
+                    <Col  md="12">
                       <FormGroup>
                         <label >
                           Nhà phát hành
@@ -162,7 +162,7 @@ useEffect(() => {
                   </Row>
                   <Row>
                     
-                    <Col className="pl-md-1" md="6">
+                    <Col md="12">
                       <FormGroup>
                         <label>User's Score</label>
 
@@ -208,7 +208,7 @@ useEffect(() => {
               <CardBody>
                 <Form >
                 <Row>
-                    <Col className="pr-md-1" md="6">
+                    <Col  md="12">
                       <FormGroup>
                         <label>Your Score</label>
                         

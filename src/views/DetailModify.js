@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState,useEffect } from "react/cjs/react.development";
 import ReactPaginate from "react-paginate";
-import '../pagination.css'
+import '../views/pagination.css'
 // reactstrap components
 import {
   Button,
@@ -19,7 +19,7 @@ import {
   Col,
   Table,
 } from "reactstrap";
-import { get, post } from "../../helper/fetch.helper";
+import { get, post } from "../helper/fetch.helper";
 
 function DetailModify(props) {
   //comments
@@ -148,7 +148,21 @@ useEffect(() => {
                 <Form>
                   <Row>
                     
-                    <Col className="pl-md-1" md="4">
+                  <Col  md="12">
+                      <FormGroup>
+                        <label >
+                          Tên Game
+                        </label>
+                        <Input
+                          defaultValue={result.name}
+                          
+                          type="text"
+                        />
+                        
+                      </FormGroup>
+                    </Col>
+                    
+                    <Col  md="12">
                       <FormGroup>
                         <label >
                           Nhà phát hành
@@ -161,16 +175,30 @@ useEffect(() => {
                         
                       </FormGroup>
                     </Col>
+                    <Col  md="12">
+                      <FormGroup>
+                        <label >
+                          Review
+                        </label>
+                        <Input
+                          defaultValue={result.review}
+                          
+                          type="text"
+                        />
+                        
+                      </FormGroup>
+                    </Col>
                   </Row>
                   <Row>
                     
-                    <Col className="pl-md-1" md="6">
+                    <Col  md="12">
                       <FormGroup>
                         <label>User's Score</label>
                         <Input
                           defaultValue={score}
                           min="0"
                           max="10"
+                          step="any"
                           type="number"
                         />
                         
@@ -196,17 +224,31 @@ useEffect(() => {
                         <label>Sumary</label>
                         <Input
                           defaultValue={result.description}
-                          
-                          type="text"
+                          cols="80"
+                          rows="4"
+                          type="textarea"
                         />
                       </FormGroup>
                     </Col>
                     
                   </Row>
                   <Row>
+                    <Col md="9">
+                      <label>Image</label>
+                      <FormGroup>
+                        <label>Select image</label>
+                        <Input
+                          
+                          type="file"
+                        />
+                        
+                      </FormGroup>
+                      
+                    </Col>
                     
                   </Row>
                 </Form>
+                <Button className="btn btn-primary">Save</Button>
               </CardBody>
               
             </Card>

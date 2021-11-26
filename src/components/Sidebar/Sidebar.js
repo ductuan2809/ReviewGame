@@ -107,14 +107,16 @@ function Sidebar(props) {
               {routes.map((prop, key) => {
                 if (prop.redirect) return null;
                 //các route muốn ẩn thì thêm đk
-                if (prop.name=="Detail" || prop.name=="ResetPass") return null;
+                if (prop.name=="Detail" || prop.name=="ResetPass"|| prop.name=="Add-games"|| prop.name=="Detail-Modify") return null;
                 
                 if (!islogin) if (prop.name=="Dashboard" || prop.name=="User Profile" || prop.name=="Table List" ) return null;
                 if (islogin) if (prop.name=="Login" || prop.name=="Register" || prop.name =="Forgot Password" || prop.name=="Dashboard" || prop.name=="Table List") return null;
                 if (isadmin) if (prop.name=="Login" || prop.name=="Register" || prop.name =="Forgot Password" || prop.name=="Dashboard" || prop.name=="Table List") return null;
                 if (!isadmin) if(prop.name=="Login" || prop.name=="Register" || prop.name =="Forgot Password" || prop.name=="Dashboard" || prop.name=="Table List"  || prop.name=="Manage-games") return null;
                 const checkadmin=()=>{
-                  if(isadmin) return prop.adminlayout + prop.path;
+                  
+                  if(islogin) return prop.userlayout + prop.path;
+                  // if(isadmin) return prop.adminlayout + prop.path;
                   return prop.guestlayout + prop.path
                 }
                 return (

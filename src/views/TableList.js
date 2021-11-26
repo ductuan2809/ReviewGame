@@ -68,7 +68,7 @@ const displayItems=games.slice(prevpage,prevpage+itemsPerPage).map((item) => {
         
         
         
-        <Link to={`/detail-item?id=${item._id}`} className="btn btn-primary"> Sửa </Link>
+        <Link to={`/detail-modify?id=${item._id}`} className="btn btn-primary"> Sửa </Link>
         <Button>Xóa</Button>
         
       </tr>
@@ -93,7 +93,7 @@ const changePage=({selected})=>{
             <Card className="card-plain">
               <CardHeader>
                 <CardTitle tag="h4">Games</CardTitle>
-                <Link to="/admin/add" className="btn btn-primary"> Thêm </Link>
+                <Link to="/admin/add-games" className="btn btn-primary"> Thêm </Link>
               </CardHeader>
               <CardBody>
                 <Table className="tablesorter" responsive>
