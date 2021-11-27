@@ -1,7 +1,7 @@
 import React, {SyntheticEvent, useState} from "react";
 import { Redirect,Link } from "react-router-dom";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
-
+import {post} from "helper/fetch.helper";
 
 
 const ChangePassword = () => {
@@ -15,32 +15,26 @@ const ChangePassword = () => {
     const submit = async (e) => {
       e.preventDefault();
 
-      const response = await fetch('http://localhost:5000/user/changePassword',{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")},
-        body: JSON.stringify({
-            oldPassword,
-            newPassword,
-            confirmPassword
-        })
-    });
+      const response = await post('http://localhost:5000/user/changePassword',
+      { oldPassword: oldPassword, newPassword: newPassword, confirmPassword: confirmPassword },
+      {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")
+      });
+      console.log(response);
 
-      const content = await response.json();
-      console.log(content);
-
-      // const content = await response.json();
-      if(content.message === 'Đăng nhập thành công!')
+      if(response.success)
       {
         setRedirect(true);
-        localStorage.setItem("token", content.data);
-        console.log(localStorage.getItem("token"));
-      }
+        
+        /* localStorage.setItem("token", content.data);
+        console.log(localStorage.getItem("token")); */
+      } 
+      alert(response.message)
   }
 
   if(redirect)
-    return <Redirect to="/"/>;
+    return <Redirect to="/user/games"/>;
 
     return (
       <div className="content">
