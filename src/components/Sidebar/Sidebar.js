@@ -115,8 +115,8 @@ function Sidebar(props) {
                 if (!isadmin) if(prop.name=="Login" || prop.name=="Register" || prop.name =="Forgot Password" || prop.name=="Dashboard" || prop.name=="Table List"  || prop.name=="Manage-games" || prop.name=="Manage-users") return null;
                 const checkadmin=()=>{
                   
-                  if(islogin) return prop.userlayout + prop.path;
-                  // if(isadmin) return prop.adminlayout + prop.path;
+                  if(islogin&&!isadmin) return prop.userlayout + prop.path;
+                  if(islogin&&isadmin) return prop.adminlayout + prop.path;
                   return prop.guestlayout + prop.path
                 }
                 return (
