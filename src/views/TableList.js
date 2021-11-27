@@ -16,12 +16,17 @@ import {
 import './pagination.css'
 import ReactPaginate from "react-paginate";
 import { Icon } from "@material-ui/core";
+import {get,post} from "helper/fetch.helper"
+import { Dialog,DialogContentText,DialogTitle,DialogActions,DialogContent } from "@material-ui/core";
+
 function Tables() {
+
+  const [open, setOpen] = React.useState(false);
+  const [id, setID] = React.useState('');
   const [games, setGame] = useState([]);
-  useEffect(() => {
-    (
-        async () => {
-            const response = await fetch('http://localhost:5000/game/getALLGame',{
+
+  const loadGames = async () => {     
+    const response = await fetch('http://localhost:5000/game/getALLGame',{
                 method: 'GET',
                 headers: {'Content-Type': 'application/json',}
             });
@@ -36,17 +41,39 @@ function Tables() {
             //   setTypes(content.data.types);
               console.log(content.message)
             }
+  }    
 
-            //console.log(gd);
-    }    
-    )();
-  },[])
+  useEffect(() => {
+    loadGames();
+  }, []);
 
 
 
-const handleDelete = () => {
-
+const handleDelete = async (id) => {
+  console.log(id);
+  const response = await post('http://localhost:5000/game/deleteGame', {id: id},
+  {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
+  console.log(response);
+  alert(response.message);
+  loadGames()
 }
+
+const handleClickOpen = () => {
+  setOpen(true);
+};
+
+const handleClose_Cancle = () => {
+  setID('');
+  setOpen(false);
+};
+
+const handleClose_Confirm = () => {
+  handleDelete(id);
+  setOpen(false);
+  //setID('');
+};
 
 
 const[item, setItem]=useState(games.slice(0,50))
@@ -70,7 +97,28 @@ const displayItems=games.slice(prevpage,prevpage+itemsPerPage).map((item) => {
         <td>{item.types.map((type) => <li>{type}</li>)}</td>
         <td>  
           <Link to={`/detail-modify?id=${item._id}`} className="btn btn-primary"><i className="fas fa-pen"></i></Link>
-          <Button color='danger' onClick={handleDelete}><i className="fas fa-trash"></i></Button>
+          <Button color='danger' onClick={()=>handleClickOpen(setID(item._id))}><i className="fas fa-trash" ></i></Button>
+          <Dialog
+                      open={open}
+                      onClose={handleClose_Cancle}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogTitle id="alert-dialog-title">
+                        {"Use Google's location service?"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                          <a>{"Bạn có muốn xóa Game này không ?"}</a>
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose_Cancle}>Hủy</Button>
+                        <Button onClick={handleClose_Confirm} autoFocus>
+                          Đồng ý
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
         </td>
         
       </tr>

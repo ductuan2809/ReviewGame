@@ -109,7 +109,7 @@ function DetailAdd() {
                   <Row>
                     <Col className="pr-md-1" md="6">
                       <FormGroup>
-                        <label>Name</label>
+                        <label>Tên Game</label>
                         <Input
                           
                           
@@ -155,7 +155,7 @@ function DetailAdd() {
                   <Row>
                     <Col md="12">
                       <FormGroup>
-                        <label>Sumary</label>
+                        <label>Mô tả</label>
                         <Input
                           cols="80"
                           
@@ -169,7 +169,7 @@ function DetailAdd() {
                   </Row>
                   <Row>
                     <Col md="9">
-                      <label>Image</label>
+                      <label>Hình ảnh</label>
                       <FormGroup>
                         <label>Select image</label>
                         <Input

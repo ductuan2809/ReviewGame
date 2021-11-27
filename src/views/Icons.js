@@ -104,7 +104,7 @@ function Icons() {
     const changePage=({selected})=>{
         setpageNumber(selected);
     }
-    
+
     return (
         <div className="content">
             <Row>

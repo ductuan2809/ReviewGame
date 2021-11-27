@@ -37,6 +37,8 @@ import {
 } from "reactstrap";
 import { useState } from "react/cjs/react.development";
 import { Redirect } from "react-router";
+import Search from "../../views/Icons";
+
 
 function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);

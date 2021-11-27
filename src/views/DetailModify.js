@@ -1,9 +1,9 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
 import { useState,useEffect } from "react/cjs/react.development";
 import ReactPaginate from "react-paginate";
 import '../views/pagination.css'
+import { Redirect,Link } from "react-router-dom";
 // reactstrap components
 import {
   Button,
@@ -34,22 +34,17 @@ function DetailModify(props) {
   const [scdtypearray,setScdtypearray]=useState([])
   const termarray=[]
   const scdtermarray=[]
-  const[comments,setcomments]=useState(commentarray.slice(0,50))
-  const[pagenumber,setpageNumber]=useState(0)
-  const cmtPerPage=3
-  const prevpage=pagenumber*cmtPerPage
-  const[score, setScore]=useState('');
+
   
   const[image, setImage]=useState('');
+  const[imageUpload, setImageUpload]=useState('');
   const[result, setResult]=useState({});
-  const[evaluates, setEvaluates]=useState([]);
 
-  
-  const onArrayChange=(values)=>{
-
-    types.push(values)
-    
-  }
+  const [name,setName]=useState('')
+  const [publisher,setPublisher]=useState('')
+  const [description,setDesciption]=useState('')
+  const [redirect, setRedirect]=useState(false);
+  const [typesList, setTypesList]=useState([])
 
   const GetURLParameter = (sParam) =>{
 
@@ -74,30 +69,26 @@ useEffect(() => {
           //làm gì đó
           setResult(response.data);
           console.log(result);
-          let gameTypes = "|| ";
+          
           response.data.types.forEach(element => {
             let type ={label:element,value:element}
             termarray.push(type)
           });
           setTypeArray(termarray)
           console.log(typearray)
-          setScore(response.data.score.toString() + "/10");
           setImage(response.data.images[0]);
+
+          setName(response.data.name)
+          setPublisher(response.data.publisher)
+          setDesciption(response.data.description)
+          setTypesList(termarray);
         } else {
 
         }     
 
 
         //get game type
-        const response2 = await get('http://localhost:5000/evaluate/getEvaluateOfGame', { gID: id });
-        console.log(response2);
-
-        if (response2.success) {
-          //làm gì đó
-          setEvaluates(response2.data)
-        } else {
-
-        }   
+        
         const responses = await get('http://localhost:5000/type/getALLType');
             if(responses.success)
             {
@@ -115,55 +106,54 @@ useEffect(() => {
   )();
 }, [])
 
+const onArrayChange=(values)=>{
+  setTypesList([]);
+  setTypesList(values);
+}
+const submit = async(e)=>{
+  e.preventDefault()
 
-
+  console.log(typesList);
+  var types = [];
+  typesList.forEach(element => {
+    let type = element.value;
+    types.push(type);
+  });
+  console.log(types);
   
-  const displayCmt=evaluates.slice(prevpage,prevpage+cmtPerPage).map((item)=>{
-    return(
-      <Form >
-                <Row>
-                    <Col className="pr-md-1" md="6">
-                      <FormGroup>
-                        <label>{item.name}</label>
-                        
-                        <div className="form-control">
-                        {new Date(item.dateEvaluate).toISOString().split("T")[0]}
-                  
-                        </div>
-                      </FormGroup>
-                    </Col>
-                    <Col className="pl-md-1" md="6">
-                      <FormGroup>
-                        <label>Score</label>
+  var data=new FormData()
+  var id = GetURLParameter('id')
+  console.log(id)
 
-                        <div className="form-control">
-                        {item.score}/10
-                  
-                        </div>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <FormGroup>
-                        <div className="form-control">
-                        {item.comment}
-                  
-                        </div>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </Form>
-
-    )
-  })
-
-  const pageCount=Math.ceil(evaluates.length/cmtPerPage)
-
-  const changePage=({selected})=>{
-        setpageNumber(selected);
+  data.append('id',id)
+  data.append('name',name)
+  data.append('publisher',publisher)
+  data.append('description',description)
+  for(var i=0; i<types.length; i++){
+    data.append('types['+i+']',types[i])
   }
-  
+  data.append('images',imageUpload)
+
+  const response =await fetch("http://localhost:5000/game/editGame", 
+  {
+    method:"POST",
+    headers:{
+    "Authorization": "Bearer " + localStorage.getItem("token")
+    },
+    body:data}
+  ) 
+  var content=await response.json()
+  console.log(content)
+  setRedirect(true);
+}
+
+const handleinput=(e)=>{
+  setImageUpload(e.target.files[0]) 
+}
+console.log(image)
+
+if(redirect) return <Redirect to="/admin/games"/>;
+
   return (
     <>
       <div className="content">
@@ -173,6 +163,7 @@ useEffect(() => {
               <CardHeader>
                 <h5 className="title">Game Details</h5>
               </CardHeader>
+              <form method="post" onSubmit={submit} >
               <CardBody>
                 <Form>
                   <Row>
@@ -184,7 +175,7 @@ useEffect(() => {
                         </label>
                         <Input
                           defaultValue={result.name}
-                          
+                          onChange={e=>setName(e.target.value)}
                           type="text"
                         />
                         
@@ -198,42 +189,15 @@ useEffect(() => {
                         </label>
                         <Input
                           defaultValue={result.publisher}
-                          
+                          onChange={e=>setPublisher(e.target.value)}
                           type="text"
                         />
                         
                       </FormGroup>
                     </Col>
-                    <Col  md="12">
-                      <FormGroup>
-                        <label >
-                          Review
-                        </label>
-                        <Input
-                          defaultValue={result.review}
-                          
-                          type="text"
-                        />
-                        
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
                     
-                    <Col  md="12">
-                      <FormGroup>
-                        <label>User's Score</label>
-                        <Input
-                          defaultValue={score}
-                          min="0"
-                          max="10"
-                          step="any"
-                          type="number"
-                        />
-                        
-                      </FormGroup>
-                    </Col>
                   </Row>
+
                   <Row>
                     <Col md="12">
                       <FormGroup>
@@ -255,12 +219,13 @@ useEffect(() => {
                   <Row>
                     <Col md="12">
                       <FormGroup>
-                        <label>Sumary</label>
+                        <label>Mô tả</label>
                         <Input
                           defaultValue={result.description}
                           cols="80"
                           rows="4"
                           type="textarea"
+                          onChange={e=>setDesciption(e.target.value)}
                         />
                       </FormGroup>
                     </Col>
@@ -268,11 +233,11 @@ useEffect(() => {
                   </Row>
                   <Row>
                     <Col md="9">
-                      <label>Image</label>
+                      <label>Hình ảnh</label>
                       <FormGroup>
                         <label>Select image</label>
                         <Input
-                          
+                          onChange={handleinput}
                           type="file"
                         />
                         
@@ -284,7 +249,7 @@ useEffect(() => {
                 </Form>
                 <Button className="btn btn-primary">Save</Button>
               </CardBody>
-              
+              </form>
             </Card>
             
             
