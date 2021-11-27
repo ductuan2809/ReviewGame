@@ -127,6 +127,7 @@ function DetailAdd() {
                         <label>Thể loại</label>
 
                         <Select 
+                        keepSelectedInList
                         placeholder="Select genre(s)"
                         addPlaceholder="+ add"
                         clearable
