@@ -40,7 +40,6 @@ const ResetPassword = () => {
 
     const submit = async (e) => {
         e.preventDefault();
-        const email = GetURLParameter('email')
         const response = await post('http://localhost:5000/user/resetPassword', { email: email, password:newPassword, confirmPassword:confirmNewPassword, otp:OTP });
         console.log(response);
         
@@ -54,7 +53,7 @@ const ResetPassword = () => {
 
     const send = async (e) => {
       e.preventDefault();
-      const email = GetURLParameter('email')
+      console.log(email);
         const response = await get('http://localhost:5000/user/forgotPassword', { email: email });
         console.log(response);
         
@@ -67,7 +66,7 @@ const ResetPassword = () => {
 
   }
     if(redirect)
-        return <Redirect to="guest/login"/>;
+        return <Redirect to="/login"/>;
 
     return (           
       <div className="content">
