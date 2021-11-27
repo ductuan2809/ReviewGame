@@ -44,6 +44,8 @@ function AdminNavbar(props) {
   const [color, setcolor] = React.useState("navbar-transparent");
   const [open, setOpen] = React.useState(false);
   const [redirect, setRedirect] = useState(false);
+  const { islogin,isadmin,routes, rtlActive, logo } = props;
+  
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
     // Specify how to clean up after this effect:
@@ -185,11 +187,14 @@ function AdminNavbar(props) {
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-navbar" right tag="ul">
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item" href="/admin/user-profile">Profile</DropdownItem>
+                    <DropdownItem className="nav-item" href={islogin && isadmin ? "/admin/user-profile" : "/user/user-profile"}>Profile</DropdownItem>
                   </NavLink>
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item">Settings</DropdownItem>
+                    <DropdownItem className="nav-item" href={islogin && isadmin ? "/admin/change-password" : "/user/change-password"}>Change Password</DropdownItem>
                   </NavLink>
+                  {/* <NavLink tag="li">
+                    <DropdownItem className="nav-item">Settings</DropdownItem>
+                  </NavLink> */}
                   <DropdownItem divider tag="li" />
                   <NavLink tag="li">
                     <DropdownItem className="nav-item"  onClick={handleClickOpen}>
