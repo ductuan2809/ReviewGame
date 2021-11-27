@@ -1,6 +1,6 @@
 
 import React,{useState,useEffect} from "react";
-import {get} from 'helper/fetch.helper'
+import {get,post} from 'helper/fetch.helper'
 // reactstrap components
 import {
   Button,
@@ -16,12 +16,16 @@ import {
   Col,
 } from "reactstrap";
 import Select from "react-dropdown-select";
-import { type } from "jquery";
+
 
 function DetailAdd() {
   
   const types=[]
-  const typearray=[]
+  const [typearray,setTypeArray]=useState([])
+  const termarray=[]
+  const [name,setName]=useState('')
+  const [publisher,setPublisher]=useState('')
+  const [description,setDesciption]=useState('')
   useEffect(() => {
     (
         async () => {
@@ -33,8 +37,9 @@ function DetailAdd() {
                   label:element.typeName,
                   value:element.typeName,
                 }
-                typearray.push(type)
+                termarray.push(type)
               });
+              setTypeArray(termarray)
               console.log(typearray)
             }
     }    
@@ -43,10 +48,39 @@ function DetailAdd() {
   const onArrayChange=(values)=>{
 
     types.push(values)
-    console.log(types)
-    console.log(typearray)
+    
   }
-  console.log(types)
+  const submit = async(e)=>{
+    e.preventDefault()
+    var data=new FormData()
+    data.append('name',name)
+    data.append('publiser',publisher)
+    data.append('description',description)
+    data.append('types',types)
+    data.append('images',image)
+    console.log(data)
+
+    const response =await fetch("http://localhost:5000/game/addGame", 
+    {
+      method:"POST",
+      headers:{
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      body:data}
+    ) 
+    var content=await response.json()
+    console.log(content)
+
+  }
+  const [image,setImage]=useState('')
+  const handleinput=(e)=>{
+    setImage(e.target.files[0])
+
+    
+  }
+  console.log(image)
   return (
     <>
       <div className="content">
@@ -56,6 +90,7 @@ function DetailAdd() {
               <CardHeader>
                 <h5 className="title">Add games</h5>
               </CardHeader>
+              <form method="post" >
               <CardBody>
                 <Form>
                   <Row>
@@ -67,20 +102,11 @@ function DetailAdd() {
                           
                           placeholder="Game's name"
                           type="text"
+                          onChange={e=>setName(e.target.value)}
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="pl-md-1" md="6">
-                      <FormGroup>
-                        <label>Score</label>
-                        <Input
-                          defaultValue="0"
-                          min="0"
-                          max="10"
-                          type="number"
-                        />
-                      </FormGroup>
-                    </Col>
+                    
                  </Row>
                  <Row>
             
@@ -90,7 +116,8 @@ function DetailAdd() {
                         <label >
                           Nhà phát hành
                         </label>
-                        <Input placeholder="Publisher's name" type="text" />
+                        <Input placeholder="Publisher's name" type="text" 
+                        onChange={e=>setPublisher(e.target.value)}/>
                       </FormGroup>
                     </Col>
                  </Row>
@@ -110,17 +137,6 @@ function DetailAdd() {
                       </FormGroup>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col md="12">
-                      <FormGroup>
-                        <label>Review</label>
-
-                        <Input placeholder="Review" type="text" />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  
-                  
                   
                   <Row>
                     <Col md="12">
@@ -132,6 +148,7 @@ function DetailAdd() {
                           placeholder="Here can be your sumary"
                           rows="5"
                           type="textarea"
+                          onChange={e=>setDesciption(e.target.value)}
                         />
                       </FormGroup>
                     </Col>
@@ -143,6 +160,7 @@ function DetailAdd() {
                         <label>Select image</label>
                         <Input
                           type="file"
+                          onChange={handleinput}
                         />
                         
                       </FormGroup>
@@ -155,10 +173,11 @@ function DetailAdd() {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button className="btn-fill" color="primary" type="submit">
+                <Button className="btn-fill" color="primary" type="submit" >
                   Save
                 </Button>
               </CardFooter>
+              </form>
             </Card>
           </Col>
           
