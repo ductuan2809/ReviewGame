@@ -1,6 +1,7 @@
 
 import React,{useState,useEffect} from "react";
 import {get,post} from 'helper/fetch.helper'
+import { Redirect,Link } from "react-router-dom";
 // reactstrap components
 import {
   Button,
@@ -20,12 +21,16 @@ import Select from "react-dropdown-select";
 
 function DetailAdd() {
   
+  const [image,setImage]=useState('')
   const types=[]
+  const [typesList, setTypesList]=useState([])
   const [typearray,setTypeArray]=useState([])
   const termarray=[]
   const [name,setName]=useState('')
   const [publisher,setPublisher]=useState('')
   const [description,setDesciption]=useState('')
+  const [redirect, setRedirect]=useState(false);
+
   useEffect(() => {
     (
         async () => {
@@ -46,41 +51,49 @@ function DetailAdd() {
     )();
   },[])
   const onArrayChange=(values)=>{
-
-    types.push(values)
-    
+    setTypesList([]);
+    setTypesList(values);
   }
   const submit = async(e)=>{
     e.preventDefault()
+
+    console.log(typesList);
+    var types = [];
+    typesList.forEach(element => {
+      let type = element.value;
+      types.push(type);
+    });
+    console.log(types);
+    
     var data=new FormData()
     data.append('name',name)
-    data.append('publiser',publisher)
+    data.append('publisher',publisher)
     data.append('description',description)
-    data.append('types',types)
+    for(var i=0; i<types.length; i++){
+      data.append('types['+i+']',types[i])
+    }
     data.append('images',image)
-    console.log(data)
 
     const response =await fetch("http://localhost:5000/game/addGame", 
     {
       method:"POST",
       headers:{
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
       "Authorization": "Bearer " + localStorage.getItem("token")
       },
       body:data}
     ) 
     var content=await response.json()
     console.log(content)
-
+    setRedirect(true);
   }
-  const [image,setImage]=useState('')
+  
   const handleinput=(e)=>{
-    setImage(e.target.files[0])
-
-    
+    setImage(e.target.files[0]) 
   }
   console.log(image)
+
+  if(redirect) return <Redirect to="/admin/games"/>;
+
   return (
     <>
       <div className="content">
@@ -90,7 +103,7 @@ function DetailAdd() {
               <CardHeader>
                 <h5 className="title">Add games</h5>
               </CardHeader>
-              <form method="post" >
+              <form method="post" onSubmit={submit} >
               <CardBody>
                 <Form>
                   <Row>
