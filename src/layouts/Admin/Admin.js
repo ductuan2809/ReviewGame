@@ -100,6 +100,8 @@ function Admin(props) {
             />
             <div className="main-panel" ref={mainPanelRef}>
               <AdminNavbar
+                islogin={true}
+                isadmin={true}
                 brandText={getBrandText(location.pathname)}
                 toggleSidebar={toggleSidebar}
                 sidebarOpened={sidebarOpened}

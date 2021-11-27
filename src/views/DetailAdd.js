@@ -1,6 +1,6 @@
 
-import React from "react";
-
+import React,{useState,useEffect} from "react";
+import {get} from 'helper/fetch.helper'
 // reactstrap components
 import {
   Button,
@@ -15,8 +15,38 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import Select from "react-dropdown-select";
+import { type } from "jquery";
 
 function DetailAdd() {
+  
+  const types=[]
+  const typearray=[]
+  useEffect(() => {
+    (
+        async () => {
+            const response = await get('http://localhost:5000/type/getALLType');
+            if(response.success)
+            {
+              response.data.forEach(element => {
+                let type={
+                  label:element.typeName,
+                  value:element.typeName,
+                }
+                typearray.push(type)
+              });
+              console.log(typearray)
+            }
+    }    
+    )();
+  },[])
+  const onArrayChange=(values)=>{
+
+    types.push(values)
+    console.log(types)
+    console.log(typearray)
+  }
+  console.log(types)
   return (
     <>
       <div className="content">
@@ -69,7 +99,14 @@ function DetailAdd() {
                       <FormGroup>
                         <label>Thể loại</label>
 
-                        <Input placeholder="Genre(s)" type="text" />
+                        <Select 
+                        placeholder="Select genre(s)"
+                        addPlaceholder="+ add"
+                        clearable
+                        multi
+                        options={typearray}
+                        onChange={onArrayChange}
+                          />
                       </FormGroup>
                     </Col>
                   </Row>

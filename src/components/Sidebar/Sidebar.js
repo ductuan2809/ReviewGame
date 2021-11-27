@@ -18,7 +18,7 @@ var ps;
 function Sidebar(props) {
   const location = useLocation();
   const sidebarRef = React.useRef(null);
-  //const islogin = true;
+  
   
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -109,7 +109,7 @@ function Sidebar(props) {
                 //các route muốn ẩn thì thêm đk
                 if (prop.name=="Detail" || prop.name=="ResetPass"|| prop.name=="Add-games"|| prop.name=="Detail-Modify") return null;
                 
-                if (!islogin) if (prop.name=="Dashboard" || prop.name=="User Profile" || prop.name=="Table List"|| prop.name=="Manage-games" || prop.name=="Manage-users") return null;
+                if (!islogin) if (prop.name=="Dashboard" || prop.name=="User Profile" || prop.name=="Table List"|| prop.name=="Manage-games" || prop.name=="Manage-users" || prop.name=="Change-password") return null;
                 if (islogin) if (prop.name=="Login" || prop.name=="Register" || prop.name =="Forgot Password" || prop.name=="Dashboard" || prop.name=="Table List") return null;
                 if (isadmin) if (prop.name=="Login" || prop.name=="Register" || prop.name =="Forgot Password" || prop.name=="Dashboard" || prop.name=="Table List") return null;
                 if (!isadmin) if(prop.name=="Login" || prop.name=="Register" || prop.name =="Forgot Password" || prop.name=="Dashboard" || prop.name=="Table List"  || prop.name=="Manage-games" || prop.name=="Manage-users") return null;

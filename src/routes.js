@@ -17,6 +17,7 @@ import Dashboard from "views/Dashboard";
 import DetailAdd from "views/DetailAdd";
 import ManageUser from "views/ManageUser";
 import DetailModify from "views/DetailModify";
+import ChangePassword from "auth/ChangePassword";
 
 const authRoutes = [
 
@@ -111,6 +112,16 @@ var routes = [
     rtlName: "Manage-users",
     icon: "tim-icons icon-atom",
     component: ManageUser,
+    adminlayout: "/admin",
+    guestlayout: "/guest",
+    userlayout: "/user",
+  },
+  {
+    path: "/change-password",
+    name: "Change-password",
+    rtlName: "Change-password",
+    icon: "tim-icons icon-atom",
+    component: ChangePassword,
     adminlayout: "/admin",
     guestlayout: "/guest",
     userlayout: "/user",
