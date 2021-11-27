@@ -1,54 +1,73 @@
 import React, {SyntheticEvent, useState} from "react";
 import { Redirect,Link } from 'react-router-dom';
-import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
+//import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
+
+import {
+  Button,
+  Card,
+  CardTitle,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  CardText,
+  FormGroup,
+  Form,
+  Input,
+  Row,
+  Col,
+} from "reactstrap";
+import { get, post } from "../helper/fetch.helper";
 
 
 const ResetPassword = () => {
     const [redirect, setRedirect] = useState(false);
     const [confirmNewPassword, setconfirmNewPassword] = useState('');
     const [newPassword, setnewPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [OTP, setOTP] = useState('');
+    const [disabled, setDisable] = useState(false);
+
+    const GetURLParameter = (sParam) =>{
+      var sPageURL = window.location.search.substring(1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++) {
+          var sParameterName = sURLVariables[i].split('=');
+          if (sParameterName[0] === sParam) {
+              return (sParameterName[1].toString());
+          }
+      }
+  }
 
     const submit = async (e) => {
         e.preventDefault();
-        // const token = GetURLParameter('token')
-        // const email = GetURLParameter('email')
-        // const response = await fetch('https://lmsg03.azurewebsites.net/api/Authenticate/resetpassword',{
-        //     method: 'POST',
-        //     headers: {'Content-Type': 'application/json'},
-        //     credentials: 'include',
-        //     body: JSON.stringify({
-        //         newPassword,
-        //         confirmNewPassword,
-        //         email,
-        //         token
-        //     })
-        // });
-
-        // const content = await response.json();
-
-        // if(content.status === '200')
-        // {
-        //     setRedirect(true);
-        //     alert(content.message)
-        //     //localStorage.setItem('username', content.message)
-        // }else
-        // {
-        //     setRedirect(false);
-        //     alert(content.message)
-        // }     
-    }
-    const GetURLParameter = (sParam) =>{
-        var sPageURL = window.location.search.substring(1);
-        var sURLVariables = sPageURL.split('&');
-        for (var i = 0; i < sURLVariables.length; i++) {
-            var sParameterName = sURLVariables[i].split('=');
-            if (sParameterName[0] === sParam) {
-                return (sParameterName[1].toString());
-            }
+        const email = GetURLParameter('email')
+        const response = await post('http://localhost:5000/user/resetPassword', { email: email, password:newPassword, confirmPassword:confirmNewPassword, otp:OTP });
+        console.log(response);
+        
+        if (response.success) {
+          //làm gì đó
+          setRedirect(true);
+          alert(response.message);
         }
+        else alert(response.message);
     }
-    // if(redirect)
-    //     return <Redirect to="/login"/>;
+
+    const send = async (e) => {
+      e.preventDefault();
+      const email = GetURLParameter('email')
+        const response = await get('http://localhost:5000/user/forgotPassword', { email: email });
+        console.log(response);
+        
+        if (response.success) {
+          //làm gì đó
+          setDisable(true);
+          alert(response.message);
+        }
+        else alert(response.message);
+
+  }
+    if(redirect)
+        return <Redirect to="guest/login"/>;
 
     return (           
       <div className="content">
@@ -58,10 +77,30 @@ const ResetPassword = () => {
             <CardHeader className="mb-5">
               <h5 className="card-category">Reset Password</h5>
               <CardTitle tag="h3">
-                Hãy điền mật khẩu mới cho tài khoản của bạn !
+                Hãy điền E-mail của bạn để chúng tôi gửi OTP code giúp bạn Reset Password !
               </CardTitle>
             </CardHeader>
             <CardBody>
+            <form onSubmit={send}>
+            <div className="form-group">
+            <Row>
+                    <Col className="pr-md-1" md="9">
+                      <FormGroup>
+                        <label htmlFor="exampleInputEmail1">
+                          E-mail
+                        </label>
+                        <Input defaultValue={email} placeholder="Your email" type="email" onChange={e => setEmail(e.target.value.toString())} />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pl-md-1" md="3">
+                      <label htmlFor="exampleInputEmail1"></label>
+                      <FormGroup>
+                      <input id="sendEmail" disabled={disabled} className="btn btn-block login-btn mb-4" type="submit" defaultValue="Submit" value="Send"  />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+              </div>
+              </form>
             <form onSubmit={submit}>
             <div className="form-group">
                  <label>New Password</label>
@@ -69,7 +108,7 @@ const ResetPassword = () => {
                     type="password" 
                     className="form-control" 
                     placeholder="**************"
-                    onChange={e => setnewPassword(e.target.value)}
+                    onChange={e => setnewPassword(e.target.value.toString())}
                     />
               </div>
               <div className="form-group">
@@ -78,10 +117,19 @@ const ResetPassword = () => {
                     type="password" 
                     className="form-control" 
                     placeholder="**************"
-                    onChange={e => setconfirmNewPassword(e.target.value)}
+                    onChange={e => setconfirmNewPassword(e.target.value.toString())}
                     />
               </div>
-              <input id="resetpass" className="btn btn-block login-btn mb-4" type="submit" defaultValue="Submit"  />
+              <div className="form-group">
+                 <label>OTP CODE</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    placeholder="OTP"
+                    onChange={e => setOTP(e.target.value)}
+                    />
+              </div>
+              <input id="resetpass" className="btn btn-block login-btn mb-4" type="submit" defaultValue="Submit" value="Submit" />
               </form>
               <Link to="#!" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
               <p className="login-card-footer-text"></p>

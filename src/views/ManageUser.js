@@ -24,25 +24,23 @@ function ManageUser() {
     const [isAct, setIsactived] = React.useState(false);
     const [username, setUsername] = React.useState(false);
     const [name, setName] = React.useState(false);
-    useEffect(() => {
-      (
-          async () => {
-            
-            const response = await get('http://localhost:5000/user/getALLUser',{},{
+
+    const loadUsers = async () => {     
+      const response = await get('http://localhost:5000/user/getALLUser',{},{
               'Content-Type': 'application/json',
               Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
-    
-            if(response.success)
-            {
-              setUsers(response.data);
-            } else {
-              alert(response.message);
-            }
-      }    
-      )();
-  },[])
+      if(response.success)
+      {
+        setUsers(response.data);
+      } else {
+        alert(response.message);
+        }
+    }    
   
 
+  useEffect(() => {
+    loadUsers();
+  }, []);
   // const handleCheck_Isactive = (isActived,id) => {
     // if(isActived)
     // {
@@ -62,6 +60,7 @@ function ManageUser() {
   
     if (response.success) {
       alert("Khóa thành công tài khoản: "+username);
+      loadUsers();
     } else {
       alert("Có lỗi gì đó xảy ra !")
     }
@@ -74,6 +73,7 @@ function ManageUser() {
     
     if (response.success) {
       alert("Mở khóa thành công tài khoản: "+username);
+      loadUsers();
     } else {
       alert("Có lỗi gì đó xảy ra !")
     }

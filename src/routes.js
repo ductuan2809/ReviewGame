@@ -107,8 +107,8 @@ var routes = [
   },
   {
     path: "/manage-user",
-    name: "Manage-games",
-    rtlName: "Mangae-games",
+    name: "Manage-users",
+    rtlName: "Manage-users",
     icon: "tim-icons icon-atom",
     component: ManageUser,
     adminlayout: "/admin",
