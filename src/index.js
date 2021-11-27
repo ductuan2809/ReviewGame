@@ -33,9 +33,9 @@ import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import Detail from "views/GameDetail/Detail";
 import DetailModify from "views/DetailModify";
 
-const userstate={
-  role : false,
-}
+// const userstate={
+//   role : false,
+// }
 
 
 

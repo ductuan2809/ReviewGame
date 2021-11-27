@@ -35,12 +35,15 @@ import {
   NavbarToggler,
   ModalHeader,
 } from "reactstrap";
+import { useState } from "react/cjs/react.development";
+import { Redirect } from "react-router";
 
 function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
   const [open, setOpen] = React.useState(false);
+  const [redirect, setRedirect] = useState(false);
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
     // Specify how to clean up after this effect:
@@ -72,6 +75,7 @@ function AdminNavbar(props) {
 
   const Logout = () => {
     // localStorage.clear("token");
+    
     // console.log(localStorage.getItem("token"));
   };
 
@@ -86,8 +90,10 @@ function AdminNavbar(props) {
   const handleClose_Confirm = () => {
     localStorage.clear("token");
     setOpen(false);
+    setRedirect(true);
   };
 
+  if(redirect) return <Redirect to="/guest/games"/>
 
   return (
     <>
