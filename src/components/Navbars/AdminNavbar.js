@@ -91,6 +91,7 @@ function AdminNavbar(props) {
 
   const handleClose_Confirm = () => {
     localStorage.clear("token");
+    localStorage.clear("role");
     setOpen(false);
     setRedirect(true);
   };

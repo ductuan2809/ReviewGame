@@ -33,8 +33,8 @@ const ChangePassword = () => {
       alert(response.message)
   }
 
-  if(redirect)
-    return <Redirect to="/user/games"/>;
+  if(redirect && localStorage.getItem('role') == 0) return <Redirect to="/user/games"/>;
+  else if(redirect && localStorage.getItem('role') == 1) return <Redirect to="/admin/games"/>;
 
     return (
       <div className="content">

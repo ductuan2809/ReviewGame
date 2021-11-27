@@ -7,31 +7,32 @@ import { get, post } from "../helper/fetch.helper";
 
 const Login = (props) => {
     //const {setName} = props;
-    
-    
+    //const tokenadmin = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJXZWIgUmV2aWV3IEdhbWUiLCJkYXRhIjp7ImlkIjoiNjE5YjQ4NmY3ODBiZDIzYzIwYzFjYjQ0Iiwicm9sZSI6MX0sImlhdCI6MTYzNzg5ODQyMDU5NywiZXhwIjoxNjM3OTg0ODIwNTk3fQ.M2kFEv8Y1pNxof4c0gD25M4ieibA9yxDbKfkqU7sjI8')
     const [userName, setUsername] = useState('');
     const [userPwd, setPassword] = useState('');
     const [redirect, setRedirect] = useState(-1);
-    // const [redirectadmin,setRedirectAdmin]=useState(false)
 
     const submit = async (e) => {
       e.preventDefault();
-
-      
 
       const response = await post('http://localhost:5000/user/login', { userName: userName, userPwd: userPwd });
       console.log(response);
       if(response.success)
       {
+        setRedirect(true);
         localStorage.setItem("token", response.data);
         const admin=await get('http://localhost:5000/user/findUserByToken',{},{"Authorization": "Bearer " + localStorage.getItem("token")})
         console.log(admin.data.role)
-        
+        localStorage.setItem("role", admin.data.role)
+
         if(admin.data.role==1) setRedirect(1);
         else setRedirect(0);
         
         
         console.log(localStorage.getItem("token"));
+      }
+      else {
+        alert(response.message);
       }
 
       /*const response = await fetch('http://localhost:5000/user/login',{
@@ -62,9 +63,10 @@ const Login = (props) => {
   const handlePassChange = (e) =>{
       setPassword(e.target.value);
   }
-  if(redirect==1) return <Redirect to="/admin/games"/>;
-  else if (redirect==0) return <Redirect to="/user/games"/>
-  return (
+  if(redirect == 1) return <Redirect to="/admin/games"/>;
+  else if(redirect == 0) return <Redirect to="/user/games"/>;
+
+    return (
       <div className="content">
       <Row>
         <Col md="12">
