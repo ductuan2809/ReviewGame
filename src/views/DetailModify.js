@@ -20,6 +20,8 @@ import {
   Table,
 } from "reactstrap";
 import { get, post } from "../helper/fetch.helper";
+import Select from "react-dropdown-select";
+
 
 function DetailModify(props) {
   //comments
@@ -27,15 +29,27 @@ function DetailModify(props) {
   const commentarray=[
     
   ]
+  const types=[]
+  const [typearray,setTypeArray]=useState([])
+  const [scdtypearray,setScdtypearray]=useState([])
+  const termarray=[]
+  const scdtermarray=[]
   const[comments,setcomments]=useState(commentarray.slice(0,50))
   const[pagenumber,setpageNumber]=useState(0)
   const cmtPerPage=3
   const prevpage=pagenumber*cmtPerPage
   const[score, setScore]=useState('');
-  const[types, setTypes]=useState('');
+  
   const[image, setImage]=useState('');
   const[result, setResult]=useState({});
   const[evaluates, setEvaluates]=useState([]);
+
+  
+  const onArrayChange=(values)=>{
+
+    types.push(values)
+    
+  }
 
   const GetURLParameter = (sParam) =>{
 
@@ -62,9 +76,11 @@ useEffect(() => {
           console.log(result);
           let gameTypes = "|| ";
           response.data.types.forEach(element => {
-            gameTypes = gameTypes + element.toString() + " || ";
+            let type ={label:element,value:element}
+            termarray.push(type)
           });
-          setTypes(gameTypes);
+          setTypeArray(termarray)
+          console.log(typearray)
           setScore(response.data.score.toString() + "/10");
           setImage(response.data.images[0]);
         } else {
@@ -72,7 +88,7 @@ useEffect(() => {
         }     
 
 
-        //get game comment
+        //get game type
         const response2 = await get('http://localhost:5000/evaluate/getEvaluateOfGame', { gID: id });
         console.log(response2);
 
@@ -81,14 +97,27 @@ useEffect(() => {
           setEvaluates(response2.data)
         } else {
 
-        }    
+        }   
+        const responses = await get('http://localhost:5000/type/getALLType');
+            if(responses.success)
+            {
+              responses.data.forEach(element => {
+                let type={
+                  label:element.typeName,
+                  value:element.typeName,
+                }
+                scdtermarray.push(type)
+              });
+              setScdtypearray(scdtermarray)
+              console.log(scdtypearray)
+            } 
       }
   )();
 }, [])
 
 
 
-
+  
   const displayCmt=evaluates.slice(prevpage,prevpage+cmtPerPage).map((item)=>{
     return(
       <Form >
@@ -209,11 +238,16 @@ useEffect(() => {
                     <Col md="12">
                       <FormGroup>
                         <label>Thể loại</label>
-                        <Input
-                          defaultValue={types}
-                          
-                          type="text"
-                        />
+                        <Select 
+                        checked={typearray}
+                        keepSelectedInList
+                        values={typearray}
+                        addPlaceholder="+ add"
+                        clearable
+                        multi
+                        options={scdtypearray}
+                        onChange={onArrayChange}
+                          />
 
                       </FormGroup>
                     </Col>
