@@ -145,6 +145,7 @@ const submit = async(e)=>{
   var content=await response.json()
   console.log(content)
   setRedirect(true);
+  alert(content.message);
 }
 
 const handleinput=(e)=>{
@@ -152,7 +153,7 @@ const handleinput=(e)=>{
 }
 console.log(image)
 
-if(redirect) return <Redirect to="/admin/games"/>;
+if(redirect) return <Redirect to="/admin/manage-games"/>;
 
   return (
     <>

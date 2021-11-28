@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Redirect,Link } from "react-router-dom";
 import { useState,useEffect } from "react/cjs/react.development";
 import ReactPaginate from "react-paginate";
 import '../pagination.css'
@@ -40,6 +40,8 @@ function Detail(props) {
   const[userEvaluate, setUserEvaluate]=useState({});
   const[userScore, setUserScore]=useState();
   const[userReview, setUserReview]=useState('');
+
+  const[isBan, setIsBan]=useState(false);
 
   const GetURLParameter = (sParam) =>{
 
@@ -132,18 +134,28 @@ const submit = async (e) => {
       Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
     console.log(response);
     alert(response.message);
+
+    if (response.message === "Bạn đã bị khóa tài khoản do liên tục vi phạm nguyên tắc đánh giá của ReviewGame! Nếu có bất cứ thắc mắc nào xin liên hệ email: phamduylap123456@gmail.com")
+    {
+      setIsBan(true);
+    }
   } else if (evaluateExist){
     const response = await post('http://localhost:5000/evaluate/editEvaluate', { gID: id, score: userScore, comment: userReview }, {
       'Content-Type': 'application/json',
       Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")});
     console.log(response);
     alert(response.message);
+
+    if (response.message === "Bạn đã bị khóa tài khoản do liên tục vi phạm nguyên tắc đánh giá của ReviewGame! Nếu có bất cứ thắc mắc nào xin liên hệ email: phamduylap123456@gmail.com")
+    {
+      setIsBan(true);
+    }
   } else {
     alert("Bạn phải đăng nhập để tiến hành đánh giá");
   }
 }
 
-
+  if (isBan) return <Redirect to="/guest/login"/>;
 
   const displayCmt=evaluates.slice(prevpage,prevpage+cmtPerPage).map((item)=>{
     return(

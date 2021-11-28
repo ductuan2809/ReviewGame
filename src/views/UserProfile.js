@@ -106,7 +106,7 @@ function UserProfile() {
           Accept: 'application/json',"Authorization": "Bearer " + localStorage.getItem("token")},
         body: JSON.stringify({
           name: name,
-          email: email,
+          //email: email,
           phone: phone,
           gender: gender,
           dateofBirth: dateofBirth
@@ -121,6 +121,7 @@ function UserProfile() {
       console.log("Success");
     }
     else console.log("Fail!");
+    alert(content.message)
 } 
 
   return (
@@ -152,7 +153,7 @@ function UserProfile() {
                         <label htmlFor="exampleInputEmail1">
                           Email address
                         </label>
-                        <Input defaultValue={email} placeholder={email} type="email" onChange={e => setEmail(e.target.value.toString())} />
+                        <Input defaultValue={email} placeholder={email} type="email" onChange={e => setEmail(e.target.value.toString())} readOnly />
                       </FormGroup>
                     </Col>
                   </Row>

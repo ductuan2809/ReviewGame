@@ -83,10 +83,7 @@ const ChangePassword = () => {
                 </div>
                 <input name="changepass" id="changepass" className="btn btn-block login-btn mb-4" type="submit" defaultValue="Confirm"  />
               </form>
-              <Link to="#!" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
-              <p className="login-card-footer-text"></p>
-              <a href="/admin/register" className="login-card-footer-text">Register ?</a>
-              <p className="login-card-footer-text"></p>
+              
               <Link to="/" className="text-reset">Back to Home!</Link><p />
               <nav className="login-card-footer-nav">
                 <a href="https://www.facebook.com/phamduy.lap.16/">Contact me for more information</a>

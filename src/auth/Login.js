@@ -19,7 +19,7 @@ const Login = (props) => {
       console.log(response);
       if(response.success)
       {
-        setRedirect(true);
+        //setRedirect(true);
         localStorage.setItem("token", response.data);
         const admin=await get('http://localhost:5000/user/findUserByToken',{},{"Authorization": "Bearer " + localStorage.getItem("token")})
         console.log(admin.data.role)
@@ -102,7 +102,7 @@ const Login = (props) => {
                 </div>
                 <input id="login" className="btn btn-block login-btn mb-4" type="submit" value="Đăng nhập"/>
               </form>
-              <Link to="/guest/forgotpass" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
+              <Link to="/guest/resetpassword" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
               <p className="login-card-footer-text"></p>
               <a href="/guest/register" className="login-card-footer-text">Register ?</a>
               <p className="login-card-footer-text"></p>

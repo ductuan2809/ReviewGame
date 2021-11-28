@@ -50,7 +50,7 @@ const Register = () => {
         {
           setRedirect(true);
         }
-        else alert(content.message);
+        alert(content.message);
 
     }
 
@@ -196,7 +196,7 @@ const Register = () => {
                 </div>
                 <input name="login" id="login" className="btn btn-block login-btn mb-4" type="submit" value="Đăng ký"  />
               </form>
-              <Link to="/guest/forgotpass" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
+              <Link to="/guest/resetpassword" className="forgot-password-link" textAlign= "left">Forgot password?</Link>
               <p className="login-card-footer-text"></p>
               <a href="/guest/login" className="login-card-footer-text">Login ?</a>
               <p className="login-card-footer-text"></p>
