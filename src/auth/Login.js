@@ -80,7 +80,7 @@ const Login = (props) => {
             <CardBody>
             <form method="post" onSubmit={submit}>
               <div className="form-group">
-                 <label>Tài khoản</label>
+                 <label>Tài khoản/Email</label>
                   <input 
                     type="text" 
                     name="username" 

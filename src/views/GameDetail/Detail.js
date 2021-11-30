@@ -378,9 +378,9 @@ const submit = async (e) => {
                   <Button className="btn-icon btn-round" color="twitter">
                     <i className="fab fa-twitter" />
                   </Button>
-                  <Button className="btn-icon btn-round" color="google">
+                  {/* <Button className="btn-icon btn-round" color="google">
                     <i className="fab fa-google-plus" />
-                  </Button>
+                  </Button> */}
                 </div>
               </CardFooter>
             </Card>

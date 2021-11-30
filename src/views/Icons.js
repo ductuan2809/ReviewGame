@@ -18,7 +18,10 @@ import {
   CardFooter,
   Button,
   Row,
-  Col
+  Col,
+  Input,
+  InputGroup,
+  FormGroup
 } from 'reactstrap';
 import ReactPaginate from "react-paginate";
 import './pagination.css'
@@ -36,7 +39,7 @@ function Icons() {
 
     
     const [games, setGame] = useState([]);
-    // const [name, setName] = useState('');
+    const [name, setName] = useState('');
     // const [images, setImage] = useState([]);
     // const [_id, setID] = useState('');
     // const [score, setScore] = useState('');
@@ -68,8 +71,20 @@ function Icons() {
                 //console.log(gd);
         }    
         )();
-      },[])
+    },[])
 
+    const search = async(e) => {
+        e.preventDefault()
+
+        const response = await get('http://localhost:5000/game/findGameByName', { name: name });
+        console.log(response);
+        if (response.success) {
+            setGame(response.data);
+        } else {
+            alert(response.message)
+        }
+    }
+    
 
     const[item, setItem]=useState(games.slice(0,50))
     //trang đang active
@@ -107,7 +122,29 @@ function Icons() {
 
     return (
         <div className="content">
+            
             <Row>
+                <Col>
+                <FormGroup className="search-bar">
+                    <Input 
+                        placeholder="SEARCH" 
+                        type="text" 
+                        onChange={e=> setName(e.target.value)}
+                    />
+                
+                </FormGroup>
+                </Col>
+                <Col>
+                    <Button
+                        aria-label="Search"
+                        className="search"
+                        onClick={search}
+                    >
+                    <i className="tim-icons icon-zoom-split" />
+                    </Button>
+                </Col>
+            </Row>
+            <Row xs="12" md="4">
                 <Col md="12">
                     
                     <Row>
