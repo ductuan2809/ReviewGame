@@ -126,22 +126,26 @@ function Icons() {
             <Row>
                 <Col>
                 <FormGroup className="search-bar">
-                    <Input 
-                        placeholder="SEARCH" 
-                        type="text" 
-                        onChange={e=> setName(e.target.value)}
-                    />
-                
+                    <Row>
+                        <Col>
+                            <Input 
+                                placeholder="SEARCH" 
+                                type="text" 
+                                onChange={e=> setName(e.target.value)}
+                            /> 
+                         </Col>
+                         <Col>
+                            <Button
+                                aria-label="Search"
+                                className="search"
+                                onClick={search}
+                                >
+                                <i className="tim-icons icon-zoom-split" />
+                            </Button>
+                         </Col>
+
+                    </Row>
                 </FormGroup>
-                </Col>
-                <Col>
-                    <Button
-                        aria-label="Search"
-                        className="search"
-                        onClick={search}
-                    >
-                    <i className="tim-icons icon-zoom-split" />
-                    </Button>
                 </Col>
             </Row>
             <Row xs="12" md="4">
